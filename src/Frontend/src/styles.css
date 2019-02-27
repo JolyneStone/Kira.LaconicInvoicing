@@ -1,1 +1,163 @@
-/* You can add global styles to this file, and also import other style files */
+@charset "UTF-8";
+* {
+    font-family: '微软雅黑', 'Microsoft YaHei', '宋体', Tahoma, Helvetica, Arial, sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+html {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: '微软雅黑', 'Microsoft YaHei', '宋体', Tahoma, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #757575;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background-color: #f7f7f7;
+}
+
+
+/* 初始加载动画 */
+
+.splash-logo {
+    left: 50%;
+    top: 50%;
+    margin-left: -26px;
+    margin-top: -30px;
+    z-index: 2;
+    position: absolute;
+    width: 54px;
+}
+
+.splash-loader,
+.splash-loader::before,
+.splash-loader::after {
+    left: 50%;
+    top: 50%;
+    margin-left: -45px;
+    margin-top: -45px;
+    position: absolute;
+    vertical-align: middle;
+    background: #c3002f;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.splash-loader::before {
+    content: "";
+    animation: bounce 1.5s infinite;
+}
+
+.splash-loader::after {
+    content: "";
+    animation: bounce 1.5s -0.4s infinite;
+}
+
+@keyframes bounce {
+    0% {
+        transform: scale(0.8);
+        -webkit-transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        -webkit-transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes bounce {
+    0% {
+        transform: scale(0.8);
+        -webkit-transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2);
+        -webkit-transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.splash-screen {
+    background-color: #282828;
+    height: 100%;
+}
+
+
+/* 覆盖bootstrap默认的nav样式，只覆盖必要的内容 */
+
+.navbar {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.navbar .navbar-brand,
+.navbar-nav>li>a {
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+}
+
+.navbar .navbar-nav>li>a:hover,
+.navbar-nav>.active>a,
+.navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #555;
+    cursor: pointer;
+}
+
+
+/* 自定义的一些样式 */
+
+.layout-content {
+    min-height: 600px;
+    padding: 15px;
+    background-color: #ffffff;
+    -moz-transition: margin-left 0.3s;
+    -o-transition: margin-left 0.3s;
+    -webkit-transition: margin-left 0.3s;
+}
+
+.layout-content .content-panel-title {
+    font-size: 24px;
+}
+
+.layout-footer {
+    background-color: #ffffff;
+    /* border-top: 1px solid #dee4e9; */
+    /* border-bottom: 1px solid #dee4e9; */
+    padding: 15px 15px 15px 240px;
+    text-align: center;
+}
+
+.layout-footer img {
+    width: 100px;
+}
+
+.layout-footer .layout-footer-right {
+    float: right;
+}
+
+.layout-footer a {
+    color: #7d8286;
+    font-size: 18px;
+    margin-left: 12px;
+}
+
+.header-no-margin {
+    margin: 0;
+}
+
+.top-filter-form {
+    margin: 15px 0px;
+    padding: 5px 10px;
+}
