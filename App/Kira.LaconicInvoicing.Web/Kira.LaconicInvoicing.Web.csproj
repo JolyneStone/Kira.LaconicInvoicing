@@ -13,6 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190417163238_V3.cs" />
+    <Compile Remove="Migrations\20190417163238_V3.Designer.cs" />
+    <Compile Remove="Migrations\20190417164014_V3.cs" />
+    <Compile Remove="Migrations\20190417164014_V3.Designer.cs" />
+    <Compile Remove="Migrations\20190417164724_V3.cs" />
+    <Compile Remove="Migrations\20190417164724_V3.Designer.cs" />
+    <Compile Remove="Migrations\20190428114820_V13.cs" />
+    <Compile Remove="Migrations\20190428114820_V13.Designer.cs" />
     <Compile Remove="Startups\PostgreSqlDefaultDbContextMigrationPack.cs" />
     <Compile Remove="Startups\PostgreSqlDesignTimeDefaultDbContextFactory.cs" />
     <Compile Remove="Startups\SqliteDefaultDbContextMigrationPack.cs" />
@@ -23,13 +31,16 @@
 
   <ItemGroup>
     <Folder Include="log\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Contents\" />
+    <Folder Include="wwwroot\temp\" />
+    <Folder Include="wwwroot\templates\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +55,8 @@
     <ProjectReference Include="..\..\Framework\OSharp.Swagger\OSharp.Swagger.csproj" />
     <ProjectReference Include="..\Kira.LaconicInvoicing.Core\Kira.LaconicInvoicing.Core.csproj" />
     <ProjectReference Include="..\Kira.LaconicInvoicing.EntityConfiguration\Kira.LaconicInvoicing.EntityConfiguration.csproj" />
+    <ProjectReference Include="..\Kira.LaconicInvoicing.Infrastructure\Kira.LaconicInvoicing.Infrastructure.csproj" />
+    <ProjectReference Include="..\Kira.LaconicInvoicing.Service\Kira.LaconicInvoicing.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,5 +64,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="http://json.schemastore.org/pattern" /></VisualStudio></ProjectExtensions>
 
 </Project>

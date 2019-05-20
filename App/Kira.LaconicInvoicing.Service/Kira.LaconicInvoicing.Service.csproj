@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\OSharp.AspNetCore\OSharp.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\Framework\OSharp\OSharp.csproj" />
+    <ProjectReference Include="..\Kira.LaconicInvoicing.Core\Kira.LaconicInvoicing.Core.csproj" />
+    <ProjectReference Include="..\Kira.LaconicInvoicing.Infrastructure\Kira.LaconicInvoicing.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

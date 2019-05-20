@@ -1,0 +1,48 @@
+<page-header title="{{ 'app.account.document-management' | translate }}"></page-header>
+<nz-card [nzBordered]="false">
+  <button nz-button [nzType]="'primary'" (click)="add()" [disabled]="!auth.Add">
+    <i nz-icon type="plus"></i>
+    <span>{{ 'app.add' | translate }}</span>
+  </button>
+  <button nz-button [nzType]="'danger'" (click)="delete()"
+    [disabled]="!auth.Delete">{{ 'app.delete' | translate }}</button>
+  <!-- <button nz-button [nzType]="'default'" (click)="upload()"
+    [disabled]="!auth.Upload"><i nz-icon nzType="upload"></i>{{ 'app.upload' | translate }}</button>
+  <button nz-button [nzType]="'default'" (click)="download()"
+    [disabled]="!auth.Download"><i nz-icon nzType="download"></i> {{ 'app.download' | translate }}</button> -->
+  <button nz-button [nzType]="'default'" (click)="refresh()" [disabled]="!auth.GetAll">
+    <i nz-icon type="redo"></i>
+    <span>{{ 'app.refresh' | translate }}</span>
+  </button>
+  <nz-table #rowSelectionTable
+    [nzData]="fileTemplateDtoList">
+    <thead>
+      <tr>
+        <th>
+          {{ 'app.account.document-name' | translate }}</th>
+        <th>
+          {{ 'app.account.document-comment' | translate }}</th>
+        <th>
+          {{ 'app.account.document-type' | translate }}
+        </th>
+        <th>
+          {{ 'app.update-datetime' | translate }}
+        </th>
+        <th>{{ 'app.operator' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.comment | slice: 0: 30 }}</td>
+        <td>{{ 'app.account.template-' + templateType[data.type] | translate }}</td>
+        <td>{{ data.dateTime | date }}</td>
+        <td>
+          <a href="javascript:" [hidden]="!auth.Update" (click)="edit(data.id)">{{ 'app.detail' | translate }}</a> |
+          <a href="javascript:" (click)="delete(data.id)" [hidden]="!auth.Delete" >{{ 'app.delete' | translate }}</a> |
+          <a href="{{appSettings.service_url}}/api/file/filemanagement/download/?path={{data.path}}" target="_blank" [hidden]="!auth.Download"><i nz-icon nzType="download"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

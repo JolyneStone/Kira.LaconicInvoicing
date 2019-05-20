@@ -1,51 +1,38 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="IdentityController.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-27 4:50</last-date>
-// -----------------------------------------------------------------------
-
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-using Kira.LaconicInvoicing.Identity;
+﻿using Kira.LaconicInvoicing.Identity;
 using Kira.LaconicInvoicing.Identity.Dtos;
 using Kira.LaconicInvoicing.Identity.Entities;
-
+using Kira.LaconicInvoicing.Service.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
 using OSharp.AspNetCore;
-using OSharp.AspNetCore.Mvc;
 using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.AspNetCore.UI;
 using OSharp.Core;
 using OSharp.Core.Modules;
 using OSharp.Core.Options;
 using OSharp.Data;
-using OSharp.Dependency;
 using OSharp.Entity;
 using OSharp.Identity;
 using OSharp.Identity.JwtBearer;
 using OSharp.Json;
 using OSharp.Net;
 using OSharp.Secutiry.Claims;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 
 namespace Kira.LaconicInvoicing.Web.Controllers
 {
     [Description("网站-认证")]
     [ModuleInfo(Order = 1)]
-    public class IdentityController : ApiController
+    public class IdentityController : BaseApiController
     {
         private readonly IIdentityContract _identityContract;
         private readonly SignInManager<User> _signInManager;
@@ -135,7 +122,7 @@ namespace Kira.LaconicInvoicing.Web.Controllers
 
             dto.RegisterIp = HttpContext.GetClientIp();
 
-            OperationResult<User> result = await _identityContract.Register(dto);
+            OperationResult<User> result = await _identityContract.Register(dto, ServiceProvider);
 
             if (result.Successed)
             {
@@ -149,14 +136,8 @@ namespace Kira.LaconicInvoicing.Web.Controllers
                     + $"如果上面的链接无法点击，您可以复制以下地址，并粘贴到浏览器的地址栏中打开。<br>"
                     + $"{url}<br>"
                     + $"祝您使用愉快！";
-                try
-                {
-                    await SendMailAsync(user.Email, "Kira.LaconicInvoicing 注册邮箱激活邮件", body);
-                }
-                catch(Exception ex)
-                {
-                    
-                }
+
+                await SendMailAsync(user.Email, "Kira.LaconicInvoicing 注册邮箱激活邮件", body);
             }
 
             return result.ToAjaxResult();
@@ -323,7 +304,7 @@ namespace Kira.LaconicInvoicing.Web.Controllers
             {
                 return null;
             }
-            OnlineUser onlineUser = HttpContext.RequestServices.GetService<IOnlineUserCache>()?.GetOrRefresh(User.Identity.Name);
+            OnlineUser onlineUser = ServiceProvider.GetService<IOnlineUserCache>()?.GetOrRefresh(User.Identity.Name);
             return onlineUser;
         }
 
@@ -345,14 +326,20 @@ namespace Kira.LaconicInvoicing.Web.Controllers
             User user = await _userManager.FindByIdAsync(dto.UserId.ToString());
             if (user == null)
             {
-                return new AjaxResult("注册邮箱激活失败：用户不存在", AjaxResultType.Error);
+                return new AjaxResult("邮箱激活失败：用户不存在", AjaxResultType.Error);
             }
             if (user.EmailConfirmed)
             {
-                return new AjaxResult("注册邮箱已激活，操作取消", AjaxResultType.Info);
+                return new AjaxResult("邮箱已激活，操作取消", AjaxResultType.Info);
             }
             string code = UrlBase64ReplaceChar(dto.Code);
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, code);
+            try
+            {
+                ServiceProvider.GetService<IOnlineUserCache>()?.Remove(user.UserName);
+            }
+            catch (Exception)
+            { }
             return result.ToOperationResult().ToAjaxResult();
         }
 
@@ -393,8 +380,53 @@ namespace Kira.LaconicInvoicing.Web.Controllers
                 + $"如果上面的链接无法点击，您可以复制以下地址，并粘贴到浏览器的地址栏中打开。<br>"
                 + $"{url}<br>"
                 + $"祝您使用愉快！";
-            await SendMailAsync(user.Email, "柳柳软件 注册邮箱激活邮件", body);
+            await SendMailAsync(user.Email, "Kira Yoshikage 注册邮箱激活邮件", body);
             return new AjaxResult("激活Email邮件发送成功");
+        }
+
+        /// <summary>
+        /// 发送重置邮件
+        /// </summary>
+        /// <param name="dto">重置重置邮箱信息</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("CheckEmailExists")]
+        [Description("发送重置邮件")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        public async Task<AjaxResult> SendResetMail(SendResetMailDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new AjaxResult("提交信息验证失败", AjaxResultType.Error);
+            }
+            if (!_verifyCodeService.CheckCode(dto.VerifyCode, dto.VerifyCodeId))
+            {
+                return new AjaxResult("验证码错误，请刷新重试", AjaxResultType.Error);
+            }
+            User user = await _userManager.FindByEmailAsync(dto.NewEmail);
+            if (user != null)
+            {
+                return new AjaxResult("发送重置邮件失败：用户已存在", AjaxResultType.Error);
+            }
+
+            var userRepo = ServiceProvider.GetService<IRepository<User, int>>();
+            user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.Email = dto.NewEmail.Trim();
+            user.EmailConfirmed = false;
+            user.NormalizeEmail = _userManager.NormalizeKey(dto.NewEmail);
+            await userRepo.UpdateAsync(user);
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = UrlBase64ReplaceChar(code);
+            string url = $"{Request.Scheme}://{Request.Host}/#/identity/confirm-email?userId={user.Id}&code={code}";
+            string body =
+                $"亲爱的用户 <strong>{user.NickName}</strong>[{user.UserName}]，你好！<br>"
+                + $"欢迎注册，重置邮箱请 <a href=\"{url}\" target=\"_blank\"><strong>点击这里</strong></a><br>"
+                + $"如果上面的链接无法点击，您可以复制以下地址，并粘贴到浏览器的地址栏中打开。<br>"
+                + $"{url}<br>"
+                + $"祝您使用愉快！";
+            await SendMailAsync(user.Email, "Kira Yoshikage 重置邮箱激活邮件", body);
+            return new AjaxResult("重置Email邮件发送成功");
         }
 
         /// <summary>
@@ -451,11 +483,11 @@ namespace Kira.LaconicInvoicing.Web.Controllers
             IEmailSender sender = HttpContext.RequestServices.GetService<IEmailSender>();
             string url = $"{Request.Scheme}://{Request.Host}/#/identity/reset-password?userId={user.Id}&token={token}";
             string body = $"亲爱的用户 <strong>{user.NickName}</strong>[{user.UserName}]，您好！<br>"
-                + $"欢迎使用柳柳软件账户密码重置功能，请 <a href=\"{url}\" target=\"_blank\"><strong>点击这里</strong></a><br>"
+                + $"欢迎使用账户密码重置功能，请 <a href=\"{url}\" target=\"_blank\"><strong>点击这里</strong></a><br>"
                 + $"如果上面的链接无法点击，您可以复制以下地址，并粘贴到浏览器的地址栏中打开。<br>"
                 + $"{url}<br>"
                 + $"祝您使用愉快！";
-            await sender.SendEmailAsync(user.Email, "柳柳软件 重置密码邮件", body);
+            await sender.SendEmailAsync(user.Email, "Kira.LaconicInvoicing 重置密码邮件", body);
             return new AjaxResult("密码重置邮件发送成功");
         }
 

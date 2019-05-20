@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="IUnitOfWorkManager.cs" company="柳柳软件">
+//  <copyright file="IUnitOfWorkManager.cs" company="Kira Yoshikage">
 //      Copyright (c) 2016-2018 66SOFT. All rights reserved.
 //  </copyright>
 //  <site>http://www.66soft.net</site>

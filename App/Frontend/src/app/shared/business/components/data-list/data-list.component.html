@@ -1,0 +1,27 @@
+<nz-table #rowSelectionTable nzShowSizeChanger [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzData]="data" [nzTotal]="total"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)" (nzPageIndexChange)="pageIndexChange()">
+  <thead>
+    <tr>
+      <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"></th>
+      <th *ngFor="let c of columns">{{ c.name }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of rowSelectionTable.data">
+      <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[d.id]" (nzCheckedChange)="refreshStatus()"></td>
+      <th *ngFor="let c of columns">{{ c.get(d) }}</th>
+    </tr>
+  </tbody>
+</nz-table>
+<div class="modal-footer">
+  <button nz-button [nzType]="'default'" [hidden]='searchAll===null' (click)="searchAll()">
+    {{ "app.select" | translate }}
+  </button>
+  <button nz-button [nzType]="'default'" (click)="cancel()">
+    {{ "app.cancel" | translate }}
+  </button>
+  <button nz-button [nzType]="'primary'" [disabled]="submit===null" (click)="submit()">
+    {{ "app.ok" | translate }}
+  </button>
+</div>

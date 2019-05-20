@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Kira.LaconicInvoicing.Identity.Entities;
 using Kira.LaconicInvoicing.Security;
+using Kira.LaconicInvoicing.Service.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OSharp.AspNetCore.Mvc;

@@ -14,8 +14,49 @@ namespace Kira.LaconicInvoicing.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Common.Entities.BaseData", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Type");
+
+                    b.ToTable("BaseData");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.File.Entities.FileTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileTemplate");
+                });
 
             modelBuilder.Entity("Kira.LaconicInvoicing.Identity.Entities.LoginLog", b =>
                 {
@@ -98,7 +139,7 @@ namespace Kira.LaconicInvoicing.Web.Migrations
                         {
                             Id = 1,
                             ConcurrencyStamp = "97313840-7874-47e5-81f2-565613c8cdcc",
-                            CreatedTime = new DateTime(2019, 3, 12, 23, 55, 47, 323, DateTimeKind.Local).AddTicks(6064),
+                            CreatedTime = new DateTime(2019, 5, 4, 16, 19, 13, 171, DateTimeKind.Local).AddTicks(4013),
                             IsAdmin = true,
                             IsDefault = false,
                             IsLocked = false,
@@ -213,6 +254,10 @@ namespace Kira.LaconicInvoicing.Web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Profile")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(3000);
+
                     b.Property<string>("RegisterIp");
 
                     b.Property<int>("UserId");
@@ -293,6 +338,509 @@ namespace Kira.LaconicInvoicing.Web.Migrations
                         .HasName("UserTokenIndex");
 
                     b.ToTable("UserToken");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Notification.Entities.Notice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notice");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Notification.Entities.NoticeReceiving", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsRead");
+
+                    b.Property<Guid>("NoticeId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NoticeReceiving");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Print.Entities.PrintTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PrintTemplate");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Purchase.Entities.Material", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("Spec")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("Material");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Purchase.Entities.PurchaseOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("AmountPaid");
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("Consignee")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsigneeContact")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Consignor")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsignorContact")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("DestAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<double?>("Freight");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PayWay");
+
+                    b.Property<string>("SourceAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("Status");
+
+                    b.Property<double>("TotalAmount");
+
+                    b.Property<int>("TotalQuantity");
+
+                    b.Property<string>("VendorName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("VendorNumber")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WarehouseNumber")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Purchase.Entities.PurchaseOrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<double>("Price");
+
+                    b.Property<Guid>("PurchaseOrderId");
+
+                    b.Property<string>("Spec")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PurchaseOrderItem");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Purchase.Entities.Vendor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<double>("Debt");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("Vendor");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Purchase.Entities.VendorMaterial", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("MaterialId");
+
+                    b.Property<Guid>("VendorId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VendorMaterial");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Sale.Entities.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<double>("Debt");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Sale.Entities.CustomerProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("CustomerId");
+
+                    b.Property<Guid>("ProductId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerProduct");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Sale.Entities.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<double>("CostPrice");
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<double>("RetailPrice");
+
+                    b.Property<string>("Spec")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<double>("WholesalePrice");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Sale.Entities.SaleOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("AmountPaid");
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("Consignee")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsigneeContact")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Consignor")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsignorContact")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("CustomerNumber")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("DestAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<double?>("Freight");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("PayWay");
+
+                    b.Property<string>("SourceAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<int>("Status");
+
+                    b.Property<double>("TotalAmount");
+
+                    b.Property<int>("TotalQuantity");
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WarehouseNumber")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("SaleOrder");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Sale.Entities.SaleOrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<double>("Price");
+
+                    b.Property<Guid>("SaleOrderId");
+
+                    b.Property<string>("Spec")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SaleOrderItem");
                 });
 
             modelBuilder.Entity("Kira.LaconicInvoicing.Security.Entities.EntityRole", b =>
@@ -525,6 +1073,395 @@ namespace Kira.LaconicInvoicing.Web.Migrations
                     b.HasIndex("AuditEntityId");
 
                     b.ToTable("AuditProperty");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.InboundReceipt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("Consignee")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsigneeContact")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("DeliveryMan")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("DeliveryManContact")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Supplier")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SupplierNo")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SupplyAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WarehouseNumber")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("WaybillNo")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("InboundReceipt");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.InboundReceiptItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<int>("GoodsCategory");
+
+                    b.Property<Guid>("InboundReceiptId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("Spec")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InboundReceiptItem");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.Inventory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<int>("GoodsCategory");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<Guid>("WarehouseId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Inventory");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.OutboundReceipt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("Consignor")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsignorContact")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("DeliveryMan")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("DeliveryManContact")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Receiver")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ReceiverAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ReceiverNo")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("WarehouseNumber")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("WaybillNo")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("OutboundReceipt");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.OutboundReceiptItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<int>("GoodsCategory");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<Guid>("OutboundReceiptId");
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("Spec")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutboundReceiptItem");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.TransferOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comment");
+
+                    b.Property<string>("Consignee")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsigneeContact")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Consignor")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ConsignorContact")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("DeliveryMan")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("DeliveryManContact")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("DestAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("DestWarehouseName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("DestWarehouseNumber")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SourceAddress")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SourceWarehouseName")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("SourceWarehouseNumber")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("WaybillNo")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("TransferOrder");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.TransferOrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Amount");
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<int>("GoodsCategory");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<double>("Price");
+
+                    b.Property<string>("Spec")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<Guid>("TransferOrderId");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransferOrderItem");
+                });
+
+            modelBuilder.Entity("Kira.LaconicInvoicing.Warehouse.Entities.Warehouse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<double>("Area");
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime?>("DateTime");
+
+                    b.Property<string>("Manager")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("ManagerContact")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(18);
+
+                    b.Property<string>("Operator")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
+
+                    b.ToTable("Warehouse");
                 });
 
             modelBuilder.Entity("OSharp.Core.EntityInfos.EntityInfo", b =>

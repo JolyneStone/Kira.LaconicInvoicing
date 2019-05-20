@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSharp", "Framework\OSharp\OSharp.csproj", "{D1B8F25F-68ED-470B-B996-436FE321F74A}"
 EndProject
@@ -71,9 +71,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kira.LaconicInvoicing.Entit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kira.LaconicInvoicing.Web", "App\Kira.LaconicInvoicing.Web\Kira.LaconicInvoicing.Web.csproj", "{F4204D72-9E3D-4FDC-B78B-7DDD9DC6D506}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.LaconicInvoicing.Domain", "App\Kira.LaconicInvoicing.Domain\Kira.LaconicInvoicing.Domain.csproj", "{233DD2C3-4EA9-451E-B24D-A42B30E494CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Test", "tests\App.Test\App.Test.csproj", "{63F633A3-2BFD-4968-A846-44FCB04539D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Test", "tests\App.Test\App.Test.csproj", "{63F633A3-2BFD-4968-A846-44FCB04539D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kira.LaconicInvoicing.Infrastructure", "App\Kira.LaconicInvoicing.Infrastructure\Kira.LaconicInvoicing.Infrastructure.csproj", "{2B25B457-2D6E-47D1-B93E-4473E148AA0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kira.LaconicInvoicing.Service", "App\Kira.LaconicInvoicing.Service\Kira.LaconicInvoicing.Service.csproj", "{15C0A554-C047-4416-889E-BF49FBF50E7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -169,14 +171,18 @@ Global
 		{F4204D72-9E3D-4FDC-B78B-7DDD9DC6D506}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4204D72-9E3D-4FDC-B78B-7DDD9DC6D506}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4204D72-9E3D-4FDC-B78B-7DDD9DC6D506}.Release|Any CPU.Build.0 = Release|Any CPU
-		{233DD2C3-4EA9-451E-B24D-A42B30E494CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{233DD2C3-4EA9-451E-B24D-A42B30E494CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{233DD2C3-4EA9-451E-B24D-A42B30E494CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{233DD2C3-4EA9-451E-B24D-A42B30E494CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{63F633A3-2BFD-4968-A846-44FCB04539D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63F633A3-2BFD-4968-A846-44FCB04539D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63F633A3-2BFD-4968-A846-44FCB04539D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63F633A3-2BFD-4968-A846-44FCB04539D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B25B457-2D6E-47D1-B93E-4473E148AA0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B25B457-2D6E-47D1-B93E-4473E148AA0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B25B457-2D6E-47D1-B93E-4473E148AA0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B25B457-2D6E-47D1-B93E-4473E148AA0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15C0A554-C047-4416-889E-BF49FBF50E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C0A554-C047-4416-889E-BF49FBF50E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15C0A554-C047-4416-889E-BF49FBF50E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15C0A554-C047-4416-889E-BF49FBF50E7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,8 +211,9 @@ Global
 		{39BDF9DC-92B1-4954-9D11-5DC998ABAD69} = {0E239259-0BC3-4521-AD60-07CB87263140}
 		{00CA561A-3DFD-4EEF-B6C8-76AEEE6A2676} = {0E239259-0BC3-4521-AD60-07CB87263140}
 		{F4204D72-9E3D-4FDC-B78B-7DDD9DC6D506} = {0E239259-0BC3-4521-AD60-07CB87263140}
-		{233DD2C3-4EA9-451E-B24D-A42B30E494CF} = {0E239259-0BC3-4521-AD60-07CB87263140}
 		{63F633A3-2BFD-4968-A846-44FCB04539D8} = {EEF78D51-F42A-4C99-B6F1-5AB3CFDB6F26}
+		{2B25B457-2D6E-47D1-B93E-4473E148AA0A} = {0E239259-0BC3-4521-AD60-07CB87263140}
+		{15C0A554-C047-4416-889E-BF49FBF50E7D} = {0E239259-0BC3-4521-AD60-07CB87263140}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00817A77-E446-44AB-B6ED-7DC2217BF385}

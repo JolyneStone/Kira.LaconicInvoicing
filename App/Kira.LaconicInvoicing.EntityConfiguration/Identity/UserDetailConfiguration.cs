@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------
 
 using Kira.LaconicInvoicing.Identity.Entities;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using OSharp.Entity;
@@ -25,6 +25,7 @@ namespace Kira.LaconicInvoicing.EntityConfiguration.Identity
         public override void Configure(EntityTypeBuilder<UserDetail> builder)
         {
             builder.HasOne(ud => ud.User).WithOne(u => u.UserDetail).HasForeignKey<UserDetail>(ud => ud.UserId).IsRequired();
+            builder.Property(ud => ud.Profile).HasColumnType("TEXT").HasMaxLength(3000);
         }
     }
 }

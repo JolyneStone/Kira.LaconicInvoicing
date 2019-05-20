@@ -1,13 +1,3 @@
-// -----------------------------------------------------------------------
-//  <copyright file="ListNode.cs" company="ÁøÁøÈí¼þ">
-//      Copyright (c) 2016-2018 66SOFT. All rights reserved.
-//  </copyright>
-//  <site>http://www.66soft.net</site>
-//  <last-editor>¹ùÃ÷·æ</last-editor>
-//  <last-date>2018-08-10 12:38</last-date>
-// -----------------------------------------------------------------------
-
-
 namespace Kira.LaconicInvoicing.Common.Dtos
 {
     /// <summary>

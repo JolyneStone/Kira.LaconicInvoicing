@@ -21,11 +21,11 @@ namespace OSharp.Extensions.Tests
         [Fact()]
         public void CastToTest()
         {
-            Assert.Equal(null, ((object)null).CastTo<object>());
+            Assert.Null(((object)null).CastTo<object>());
             Assert.Equal(123, "123".CastTo<int>());
             Assert.Equal("123", 123.CastTo<string>());
             Assert.Equal("True", true.CastTo<string>());
-            Assert.Equal(true, "true".CastTo<bool>());
+            Assert.True("true".CastTo<bool>());
             Assert.Equal("56D768A3-3D74-43B4-BD7B-2871D675CC4B".CastTo<Guid>(), new Guid("56D768A3-3D74-43B4-BD7B-2871D675CC4B"));
             Assert.Equal(UriKind.Absolute, 1.CastTo<UriKind>());
             Assert.Equal(UriKind.RelativeOrAbsolute, "RelativeOrAbsolute".CastTo<UriKind>());

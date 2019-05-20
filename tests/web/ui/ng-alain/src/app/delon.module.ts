@@ -41,7 +41,7 @@ export function delonAuthConfig(): DelonAuthConfig {
     NgZorroAntdModule.forRoot(),
     AlainThemeModule.forRoot(),
     DelonABCModule.forRoot(),
-    DelonAuthModule.forRoot(),
+    DelonAuthModule,
     DelonACLModule.forRoot(),
     DelonCacheModule.forRoot(),
     DelonUtilModule.forRoot(),

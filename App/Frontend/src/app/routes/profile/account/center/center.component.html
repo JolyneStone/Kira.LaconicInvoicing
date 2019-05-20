@@ -1,0 +1,48 @@
+<div nz-row nzGutter="24" class="py-lg">
+  <div nz-col nzMd="24" nzLg="7">
+    <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!userDetail">
+      <ng-container *ngIf="userDetail">
+        <div class="avatarHolder">
+          <img src="{{avatar}}">
+          <div class="name">{{userDetail.nickName}}</div>
+          <div>{{ "app.account.nickname" | translate }}: {{userDetail.nickName}}</div>
+        </div>
+        <div class="detail">
+          <p><i class="group"></i>{{userDetail.department}}</p>
+          <p>
+            <i class="address"></i>
+            {{userDetail.province}}
+            {{userDetail.city}}
+            {{userDetail.address}}
+          </p>
+        </div>
+        <nz-divider nzDashed></nz-divider>
+        <div class="tags">
+          <div class="tagsTitle">{{ "app.role" | translate }}</div>
+          <nz-tag *ngFor="let t of userDetail.roles">{{t}}</nz-tag>
+        </div>
+        <nz-divider nzDashed></nz-divider>
+        <div class="team">
+          <div class="teamTitle">{{ "app.account.profile" | translate }}</div>
+            <div nz-col nzLg="24" nzXl="12">
+              <div class="text-truncate">
+                {{userDetail.personalProfile}}
+              </div>
+            </div>
+        </div>
+      </ng-container>
+    </nz-card>
+  </div>
+  <div nz-col nzMd="24" nzLg="17">
+    <nz-card class="tabsCard" [nzBordered]="false" [nzTitle]="tagTitleTpl">
+      <ng-template #tagTitleTpl>
+        <nz-tabset nzSize="large" nzSelectedIndex="0">
+          <nz-tab nzTitle="{{ 'app.account.notice' | translate }}">
+            <app-account-center-notice></app-account-center-notice>
+          </nz-tab>
+        </nz-tabset>
+      </ng-template>
+      <router-outlet></router-outlet>
+    </nz-card>
+  </div>
+</div>

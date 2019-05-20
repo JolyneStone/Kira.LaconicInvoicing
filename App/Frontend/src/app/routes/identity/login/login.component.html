@@ -1,0 +1,40 @@
+<div class="identity-box">
+  <form nz-form (ngSubmit)="submitForm()" role="form" #form="ngForm">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-user">
+          <input nz-input [(ngModel)]="dto.account" name="account" placeholder="{{ 'app.login.placeholder' | translate }}" required #account="ngModel">
+        </nz-input-group>
+        <nz-form-explain *ngIf="(account.dirty || account.touched) && account.errors?.required">{{ "app.login.account.required" | translate }}</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-lock">
+          <input nz-input type="password" [(ngModel)]="dto.password" name="password" placeholder="{{ 'app.login.account.password' | translate }}" required #password="ngModel">
+        </nz-input-group>
+        <nz-form-explain *ngIf="(password.dirty || password.touched) && password.errors?.required">{{ "app.login.password.required" | translate }}</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox [(ngModel)]="dto.remember" name="remember">{{ "app.login.remember" | translate }}</label>
+        <span class="login-right">
+        <a [routerLink]="[ '/identity/forgot-password' ]">{{ "app.login.forgot-password" | translate }}</a> |
+        <a [routerLink]="[ '/identity/register' ]">{{ "app.login.signup" | translate }}</a>
+        </span>
+        <button nz-button class="login-form-button" [nzType]="'primary'" [disabled]="!(form.form.valid && canSubmit)">
+          <i class="anticon anticon-login"></i>{{ "app.login.login" | translate }}
+        </button>
+        <!-- <a href="/api/identity/oauth2?provider=QQ" target="_blank">QQ登录</a>-->
+        <!--<a href="/api/identity/oauth2?provider=Microsoft&returnUrl=http%3A%2F%2Flocalhost%3A4201%2F%23%2F" target="_blank">Microsoft{{ 'app.login.login' | translate }}</a>-->
+        <!-- <a [routerLink]="[ '/identity/register' ]">{{ "app.login.signup" | translate }}</a> -->
+        <!-- <i nz-icon type="windows" theme="outline" class="icon" (click)="open('Microsoft')"></i> -->
+      </nz-form-control>
+    </nz-form-item>
+    <nz-alert *ngIf="error" nzType="error" nzMessage="{{error}}" [nzShowIcon]="true" class="mb-lg"></nz-alert>
+    <p class="text-center">
+      <a *ngIf="resendConfirmMail" href="/#/identity/send-confirm-mail">{{ "app.register.resend-confirm-mail" | translate }}</a>
+    </p>
+  </form>
+</div>

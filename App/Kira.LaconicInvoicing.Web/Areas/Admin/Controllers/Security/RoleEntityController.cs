@@ -1,13 +1,4 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="RoleEntityController.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-07-05 14:45</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,7 +8,7 @@ using Kira.LaconicInvoicing.Identity.Entities;
 using Kira.LaconicInvoicing.Security;
 using Kira.LaconicInvoicing.Security.Dtos;
 using Kira.LaconicInvoicing.Security.Entities;
-
+using Kira.LaconicInvoicing.Service.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;

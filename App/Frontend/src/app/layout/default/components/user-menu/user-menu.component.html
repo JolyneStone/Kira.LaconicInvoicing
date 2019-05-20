@@ -1,0 +1,52 @@
+<!-- <ng-container *ngIf="!(settings.user && settings.user.name); else userSelectTemplate">
+  <a mat-button [routerLink]="[ '/identity/login' ]">
+    <mat-icon>exit_to_app</mat-icon>
+    <span mat-line>{{ "app.login.login" | translate}}</span>
+  </a>
+  <a mat-button [routerLink]="[ '/identity/register' ]">
+    <mat-icon>add_box</mat-icon>
+    <span mat-line>{{ "app.register.register" | translate }}</span>
+  </a>
+</ng-container>
+<ng-template #userSelectTemplate>
+  <button mat-button [matMenuTriggerFor]="menuUserRef">
+    <nz-avatar [nzSrc]="avatar" nzSize="small" class="mr-sm"></nz-avatar>
+    <span mat-line>{{settings.user.nickName}}</span>
+  </button>
+  <mat-menu #menuUserRef="matMenu">
+    <button mat-menu-item *ngIf="settings.user" (click)="router.navigateByUrl('/profile/account/center')">
+      <mat-icon>person</mat-icon>
+      <span mat-line>{{"menu.account.center" | translate }}</span>
+    </button>
+    <button mat-menu-item *ngIf="settings.user.isAdmin" (click)="router.navigateByUrl('/admin/dashboard')">
+      <mat-icon>account_balance</mat-icon>
+      <span mat-line>{{ "menu.account.system" | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="identity.logout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span mat-line>{{ "menu.account.logout" | translate }}</span>
+    </button>
+  </mat-menu>
+</ng-template>
+ -->
+
+<nz-dropdown nzPlacement="bottomRight">
+  <div class="item d-flex align-items-center px-sm" nz-dropdown>
+    <nz-avatar [nzSrc]="avatar" nzSize="small" class="mr-sm"></nz-avatar>
+    {{settings.user.nickName}}
+  </div>
+  <div nz-menu class="width-sm">
+    <div nz-menu-item (click)="router.navigateByUrl('/profile/account/center')"><i
+        class="anticon anticon-user mr-sm"></i>{{"menu.account.center" | translate }}</div>
+    <!-- <div nz-menu-item (click)="router.navigateByUrl('/profile/account/settings')"><i class="anticon anticon-setting mr-sm"></i>{{ "menu.account.settings" | translate }}</div> -->
+    <div nz-menu-item (click)="osharp.refreshAuthInfo()"><i
+        class="anticon anticon-reload mr-sm"></i>{{ "app.account.flush-privileges" | translate }}</div>
+    <div nz-menu-item *ngIf="!inAdminModule && settings.user.isAdmin" (click)="router.navigateByUrl('/admin')"><i
+        class="anticon anticon-global mr-sm"></i>{{ "menu.account.system" | translate }}</div>
+    <div nz-menu-item *ngIf="inAdminModule" (click)="router.navigateByUrl('/dashboard')"><i
+        class="anticon anticon-home mr-sm"></i>{{ "menu.dashboard.back-home" | translate }}</div>
+    <li nz-menu-divider></li>
+    <div nz-menu-item (click)="logout()"><i
+        class="anticon anticon-logout mr-sm"></i>{{ "menu.account.logout" | translate }}</div>
+  </div>
+</nz-dropdown>

@@ -1,0 +1,63 @@
+<nz-card>
+  <nz-alert *ngIf="error" [nzType]="'warning'" [nzMessage]="message">
+    <ng-template #message>
+      {{ 'app.account.print-please-download' | translate }}
+      <a href="http://c-lodop.com/download.html" target="_blank">{{ 'app.account.print-lopod' | translate }}</a>。
+    </ng-template>
+  </nz-alert>
+  <form *ngIf="!error" nz-form>
+    <nz-form-item nz-row>
+      <nz-form-label nz-col [nzSm]="6">{{ 'app.account.print-server' | translate}}</nz-form-label>
+      <nz-form-control nz-col [nzSm]="18">
+        <nz-input-group>
+          <div nz-col [nzSpan]="16">
+            <input nz-input nzPlaceHolder="https://localhost:8443/CLodopfuncs.js" [(ngModel)]="cog.url" name="url">
+          </div>
+          <div nz-col [nzSpan]="8">
+            <button nz-button (click)="reload(null)">{{ 'app.account.print-server-reload' | translate }}</button>
+          </div>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row>
+      <nz-form-item nz-col [nzSpan]="12">
+        <nz-form-label nz-col [nzSm]="6">{{ 'app.account.print-printer' | translate }}</nz-form-label>
+        <nz-form-control nz-col [nzSm]="18">
+          <nz-select style="width:90%;" nzPlaceHolder="{{ 'app.account.print-please-printer' | translate }}"
+            nzShowSearch nzAllowClear [(ngModel)]="cog.printer" name="printer" (ngModelChange)="changePinter($event)">
+            <nz-option *ngFor="let name of pinters" [nzLabel]="name" [nzValue]="name">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-col [nzSpan]="12">
+        <nz-form-label nz-col [nzSm]="6">{{ 'app.account.print-paper-type' | translate }}</nz-form-label>
+        <nz-form-control nz-col [nzSm]="18">
+          <nz-select style="width:90%;" nzPlaceHolder="{{ 'app.account.print-please-paper-type' | translate }}" nzShowSearch
+            nzAllowClear [(ngModel)]="cog.paper" name="paper">
+            <nz-option *ngFor="let name of papers" [nzLabel]="name" [nzValue]="name">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-row>
+      <nz-form-item nz-col [nzSpan]="12">
+        <nz-form-label nz-col [nzSm]="6">{{ 'app.account.print-template' | translate }}</nz-form-label>
+        <nz-form-control nz-col [nzSm]="18">
+          <nz-select style="width:90%;" nzPlaceHolder="{{ 'app.account.print-please-template' | translate }}"
+            nzShowSearch nzAllowClear [(ngModel)]="selectTemplate" name="selectTemplate">
+            <nz-option *ngFor="let template of templates" [nzLabel]="template.name" [nzValue]="template">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <nz-form-item nz-row>
+      <nz-form-control nz-col [nzSm]="18" [nzOffset]="6">
+        <button nz-button (click)="preview()">{{ 'app.preview' | translate }}</button>
+        <button nz-button (click)="print()">{{ 'app.print' | translate }}</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

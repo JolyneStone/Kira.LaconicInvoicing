@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="AssemblyExtensions.cs" company="柳柳软件">
+//  <copyright file="AssemblyExtensions.cs" company="Kira Yoshikage">
 //      Copyright (c) 2014 66SOFT. All rights reserved.
 //  </copyright>
 //  <site>http://www.66soft.net</site>

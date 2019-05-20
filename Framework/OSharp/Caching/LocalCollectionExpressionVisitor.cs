@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="LocalCollectionExpressionVisitor.cs" company="柳柳软件">
+//  <copyright file="LocalCollectionExpressionVisitor.cs" company="Kira Yoshikage">
 //      Copyright (c) 2014-2016 OSharp. All rights reserved.
 //  </copyright>
 //  <site>http://www.osharp.org</site>

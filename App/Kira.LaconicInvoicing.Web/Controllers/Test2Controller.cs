@@ -1,18 +1,22 @@
 ﻿
+using System;
 using System.ComponentModel;
 using System.Linq;
-
+using Kira.LaconicInvoicing.Identity.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore;
 using OSharp.AspNetCore;
 using OSharp.AspNetCore.Mvc;
 using OSharp.Dependency;
-
+using OSharp.Entity;
+using OSharp.AspNetCore.UI;
+using System.Threading.Tasks;
 
 namespace Kira.LaconicInvoicing.Web.Controllers
 {
-    public class Test2Controller : ApiController
+    public class Test2Controller : BaseApiController
     {
         private readonly ScopedDictionary _dictionary;
 

@@ -51,6 +51,7 @@ namespace OSharp.Identity
                 NickName = user.NickName,
                 Email = user.Email,
                 HeadImg = user.HeadImg,
+                PhoneNumber = user.PhoneNumber,
                 IsAdmin = isAdmin,
                 Roles = roles.ToArray()
             };

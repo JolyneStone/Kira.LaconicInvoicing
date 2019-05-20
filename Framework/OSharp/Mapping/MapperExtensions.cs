@@ -1,16 +1,6 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="MapperExtensions.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2017 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2017-09-01 12:49</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-
 using OSharp.Extensions;
 using OSharp.Properties;
 
@@ -32,6 +22,19 @@ namespace OSharp.Mapping
         {
             mapper.CheckNotNull("mapper");
             _mapper = mapper;
+        }
+
+        /// <summary>
+        /// 在对象基础上将源对象映射为指定为指定类型
+        /// </summary>
+        /// <typeparam name="TTarget">要映射的目标类型</typeparam>
+        /// <param name="target">目标类型的对象</param>
+        /// <param name="source">源对象</param>
+        /// <returns></returns>
+        public static TTarget Map<TTarget>(this TTarget target, object source)
+        {
+            CheckMapper();
+            return _mapper.MapTo(source, target);
         }
 
         /// <summary>

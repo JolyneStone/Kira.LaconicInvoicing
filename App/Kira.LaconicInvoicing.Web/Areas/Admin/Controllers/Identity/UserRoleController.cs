@@ -1,24 +1,13 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="UserRoleController.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-27 4:49</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
 using Kira.LaconicInvoicing.Identity;
 using Kira.LaconicInvoicing.Identity.Dtos;
 using Kira.LaconicInvoicing.Identity.Entities;
-
+using Kira.LaconicInvoicing.Service.Identity;
 using Microsoft.AspNetCore.Mvc;
-
 using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.AspNetCore.UI;
 using OSharp.Core.Modules;

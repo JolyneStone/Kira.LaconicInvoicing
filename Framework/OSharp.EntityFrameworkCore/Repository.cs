@@ -1,23 +1,12 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="Repository.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2017 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2017-11-15 19:20</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
 using OSharp.Collections;
 using OSharp.Data;
 using OSharp.Exceptions;
@@ -759,6 +748,29 @@ namespace OSharp.Entity
             CheckEntityKey(key, nameof(key));
 
             return await _dbSet.FindAsync(key);
+        }
+
+        /// <summary>
+        /// 异步查找第一个符合条件的数据
+        /// </summary>
+        /// <param name="predicate">数据查询谓语表达式</param>
+        /// <returns>符合条件的实体，不存在时返回null</returns>
+        public async Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            predicate.CheckNotNull("predicate");
+            return await GetFirstAsync(predicate, true);
+        }
+
+        /// <summary>
+        /// 异步查找第一个符合条件的数据
+        /// </summary>
+        /// <param name="predicate">数据查询谓语表达式</param>
+        /// <param name="filterByDataAuth">是否使用数据权限过滤，数据权限一般用于存在用户实例的查询，系统查询不启用数据权限过滤</param>
+        /// <returns>符合条件的实体，不存在时返回null</returns>
+        public async Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> predicate, bool filterByDataAuth)
+        {
+            Check.NotNull(predicate, nameof(predicate));
+            return await TrackQuery(predicate, filterByDataAuth).FirstOrDefaultAsync();
         }
 
         #endregion

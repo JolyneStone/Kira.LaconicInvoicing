@@ -1,0 +1,149 @@
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzTitle]="modalTitle"
+  [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="cancel()">
+  <ng-template #modalTitle>
+    {{ title }}
+  </ng-template>
+  <ng-template #modalContent>
+    <nz-tabset>
+      <nz-tab nzTitle="{{ 'app.base-info' | translate }}">
+        <form nz-form #f="ngForm" se-container="1">
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-name' | translate }}">
+                <input nz-input [(ngModel)]="productDto.name" name="name" required #name="ngModel">
+                <nz-form-explain *ngIf="(name.dirty || name.touched) && name.errors?.required">
+                  {{ 'app.dashboard.product-please-name' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-number' | translate }}">
+                <nz-input-group [nzAddOnAfter]="addOnAfterTemplate">
+                  <input type="text" nz-input [(ngModel)]="productDto.number" name="number" width="200px" required
+                    #number="ngModel" />
+                </nz-input-group>
+                <nz-form-explain *ngIf="(number.dirty || number.touched) && number.errors?.required">
+                  {{ 'app.dashboard.product-please-number' | translate }}</nz-form-explain>
+                <ng-template #addOnAfterTemplate>
+                  <button nz-button nzType="primary" (click)="getNewNumber()"
+                    [disabled]="!auth.GetNewNumber && mode!=='Add'" nzSize="small"
+                    nzGhost>{{ 'app.get' | translate }}</button>
+                </ng-template>
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-type' | translate }}">
+                <nz-select [(ngModel)]="productDto.type" name="type" required #type="ngModel"
+                  nzPlaceHolder="{{ 'app.dashboard.product-please-type' | translate }}">
+                  <nz-option *ngFor="let type of types" [nzLabel]="type.name" [nzValue]="type.name">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="(type.dirty || type.touched) && type.errors?.required">
+                  {{ 'app.dashboard.product-please-type' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-brand' | translate }}">
+                <input nz-input [(ngModel)]="productDto.brand" name="brand">
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-spec' | translate }}">
+                <input nz-input [(ngModel)]="productDto.spec" name="spec" #spec="ngModel">
+                <nz-form-explain *ngIf="(spec.dirty || spec.touched) && spec.errors?.required">
+                  {{ 'app.dashboard.product-please-spec' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-unit' | translate }}">
+                <nz-select [(ngModel)]="productDto.unit" name="unit" required #unit="ngModel"
+                  nzPlaceHolder="{{ 'app.dashboard.product-please-unit' | translate }}">
+                  <nz-option *ngFor="let u of units" [nzLabel]="u.name" [nzValue]="u.name">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="(unit.dirty || unit.touched) && unit.errors?.required">
+                  {{ 'app.dashboard.product-please-unit' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-cost-price' | translate }}">
+                <input nz-input required #costPrice="ngModel" [(ngModel)]="productDto.costPrice" name="costPrice">
+                <nz-form-explain *ngIf="(costPrice.dirty || costPrice.touched) && costPrice.errors?.required">
+                  {{ 'app.dashboard.product-please-cost-price' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-wholesale-price' | translate }}">
+                <input nz-input required #wholesalePrice="ngModel" [(ngModel)]="productDto.wholesalePrice" name="wholesalePrice">
+                <nz-form-explain *ngIf="(wholesalePrice.dirty || wholesalePrice.touched) && wholesalePrice.errors?.required">
+                  {{ 'app.dashboard.product-please-wholesale-price' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-retail-price' | translate }}">
+                <input nz-input required #retailPrice="ngModel" [(ngModel)]="productDto.retailPrice" name="retailPrice">
+                <nz-form-explain *ngIf="(retailPrice.dirty || retailPrice.touched) && retailPrice.errors?.required">
+                  {{ 'app.dashboard.product-please-retail-price' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-operator' | translate }}">
+                <input nz-input [(ngModel)]="productDto.operator" name="operator">
+              </se>
+            </nz-col>
+          </nz-row>
+          <!-- <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-wholesale-price' | translate }}">
+                <input nz-input [(ngModel)]="productDto.wholesalePrice" name="wholesalePrice" required
+                  #wholesalePrice="ngModel">
+                <nz-form-explain
+                  *ngIf="(wholesalePrice.dirty || wholesalePrice.touched) && wholesalePrice.errors?.required">
+                  {{ 'app.dashboard.product-please-wholesale-price' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+                <se label="{{ 'app.dashboard.product-cost-price' | translate }}">
+                  <input nz-input [(ngModel)]="productDto.costPrice" name="costPrice">
+                </se>
+              </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.product-retail-price' | translate }}">
+                <input nz-input [(ngModel)]="productDto.retailPrice" name="retailPrice">
+              </se>
+            </nz-col>
+          </nz-row> -->
+          <nz-row nzGutter="16">
+            <nz-col nzLg="24" nzMd="24" nzSm="24">
+              <se label="{{ 'app.dashboard.product-comment' | translate }}">
+                <textarea nz-input [(ngModel)]="productDto.comment" name="comment"
+                  [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+                  placeholder="{{ 'app.dashboard.product-please-comment' | translate }}"></textarea>
+              </se>
+            </nz-col>
+          </nz-row>
+        </form>
+        <div class="modal-footer">
+          <button nz-button [nzType]="'default'" (click)="cancel()">
+            {{ "app.cancel" | translate }}
+          </button>
+          <button nz-button [nzType]="'primary'" [disabled]="!auth[mode] && !f.valid" (click)="ok()">
+            {{ "app.ok" | translate }}
+          </button>
+        </div>
+      </nz-tab>
+      <nz-tab [nzDisabled]='!auth.GetCustomers' nzTitle="{{ 'app.correlative-information' | translate }}">
+        <app-data-list #dataList></app-data-list>
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+</nz-modal>

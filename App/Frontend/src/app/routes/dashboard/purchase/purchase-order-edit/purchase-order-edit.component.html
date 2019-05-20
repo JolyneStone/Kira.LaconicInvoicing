@@ -1,0 +1,302 @@
+<page-header title="{{ 'app.dashboard.purchaseorder-management' | translate }}"></page-header>
+<form nz-form #f="ngForm" se-container="1" [nzLayout]="'vertical'">
+  <nz-card [nzBordered]="false" nzTitle="{{ 'app.dashboard.purchaseorder-base-info' | translate }}">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterNumberTemplate">
+            <input nz-input #number="ngModel" name="number" required [(ngModel)]="purchaseOrderDto.number"
+              placeholder="{{ 'app.dashboard.purchaseorder-please-number' | translate}}" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="(number.dirty || number.touched) && number.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-number' | translate }}
+          </nz-form-explain>
+          <ng-template #addOnAfterNumberTemplate>
+            <button nz-button nzType="primary" (click)="getNewNumber()" [disabled]="!auth.GetNewNumber && mode!=='Add'"
+              nzSize="small" nzGhost>{{ 'app.get' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-pay-way' | translate }}">
+          <nz-select [(ngModel)]="purchaseOrderDto.payWay" name="payWay" required #payWay="ngModel"
+            nzPlaceHolder="{{ 'app.dashboard.purchaseorder-please-pay-way' | translate }}">
+            <nz-option *ngFor="let p of payWays" [nzLabel]="p.name" [nzValue]="p.name">
+            </nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="(payWay.dirty || payWay.touched) && payWay.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-pay-way' | translate }}</nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-freight' | translate }}">
+          <input nz-input #freight="ngModel" name="freight" [(ngModel)]="purchaseOrderDto.freight"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-freight' | translate}}" />
+          <nz-form-explain *ngIf="(freight.dirty || freight.touched) && freight.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-freight' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-vendor-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterVendorNumberTemplate">
+            <input nz-input #vendorNumber="ngModel" name="vendorNumber" [(ngModel)]="purchaseOrderDto.vendorNumber"
+              placeholder="{{ 'app.dashboard.purchaseorder-please-vendor-number' | translate}}" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="(vendorNumber.dirty || vendorNumber.touched) && vendorNumber.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-vendor-number' | translate }}
+          </nz-form-explain>
+          <ng-template #addOnAfterVendorNumberTemplate>
+            <button nz-button nzType="primary" (click)="selectVendor()" [disabled]="mode!=='Add'" nzSize="small"
+              nzGhost>{{ 'app.select' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-vendor-name' | translate }}">
+          <input nz-input #vendorName="ngModel" name="vendorName" [(ngModel)]="purchaseOrderDto.vendorName"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-vendor-name' | translate}}" />
+          <nz-form-explain *ngIf="(vendorName.dirty || vendorName.touched) && vendorName.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-vendor-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-consignor' | translate }}">
+          <input nz-input #consignor="ngModel" name="consignor" [(ngModel)]="purchaseOrderDto.consignor"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-consignor' | translate}}" />
+          <nz-form-explain *ngIf="(consignor.dirty || consignor.touched) && consignor.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-consignor' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-consignor-contact' | translate }}">
+          <input nz-input #consignorContact="ngModel" name="consignorContact"
+            [(ngModel)]="purchaseOrderDto.consignorContact"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-consignor-contact' | translate}}" />
+          <nz-form-explain
+            *ngIf="(consignorContact.dirty || consignorContact.touched) && consignorContact.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-consignor-contact' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-warehouse-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterWarehouseNumberTemplate">
+            <input nz-input #warehouseNumber="ngModel" name="warehouseNumber"
+              [(ngModel)]="purchaseOrderDto.warehouseNumber"
+              placeholder="{{ 'app.dashboard.purchaseorder-please-warehouse-number' | translate}}" />
+          </nz-input-group>
+          <nz-form-explain
+            *ngIf="(warehouseNumber.dirty || warehouseNumber.touched) && warehouseNumber.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-warehouse-number' | translate }}
+          </nz-form-explain>
+          <ng-template #addOnAfterWarehouseNumberTemplate>
+            <button nz-button nzType="primary" (click)="selectWarehouse()" [disabled]="mode!=='Add'" nzSize="small"
+              nzGhost>{{ 'app.select' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-warehouse-name' | translate }}">
+          <input nz-input #warehouseName="ngModel" name="warehouseName" [(ngModel)]="purchaseOrderDto.warehouseName"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-warehouse-name' | translate}}" />
+          <nz-form-explain *ngIf="(warehouseName.dirty || warehouseName.touched) && warehouseName.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-warehouse-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-consignee' | translate }}">
+          <input nz-input #consignee="ngModel" name="consignee" [(ngModel)]="purchaseOrderDto.consignee"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-consignee' | translate}}" />
+          <nz-form-explain *ngIf="(consignee.dirty || consignee.touched) && consignee.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-consignee' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-consignee-contact' | translate }}">
+          <input nz-input #consigneeContact="ngModel" name="consigneeContact"
+            [(ngModel)]="purchaseOrderDto.consigneeContact"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-consignee-contact' | translate}}" />
+          <nz-form-explain
+            *ngIf="(consigneeContact.dirty || consigneeContact.touched) && consigneeContact.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-consignee-contact' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-source-address' | translate }}">
+          <input nz-input #sourceAddress="ngModel" name="sourceAddress" [(ngModel)]="purchaseOrderDto.sourceAddress"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-source-address' | translate}}" />
+          <nz-form-explain *ngIf="(sourceAddress.dirty || sourceAddress.touched) && sourceAddress.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-source-address' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-dest-address' | translate }}">
+          <input nz-input #destAddress="ngModel" name="destAddress" [(ngModel)]="purchaseOrderDto.destAddress"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-source-address' | translate}}" />
+          <nz-form-explain *ngIf="(destAddress.dirty || destAddress.touched) && destAddress.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-dest-address' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-total-amount' | translate }}">
+          <input nz-input readonly="readonly" name="totalAmount" [ngModel]="totalAmount" />
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-amount-paid' | translate }}">
+          <input nz-input #amountPaid="ngModel" name="amountPaid" required [(ngModel)]="purchaseOrderDto.amountPaid"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-amount-paid' | translate}}" />
+          <nz-form-explain *ngIf="(amountPaid.dirty || amountPaid.touched) && amountPaid.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-amount-paid' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-status' | translate }}">
+          <nz-select [(ngModel)]="purchaseOrderDto.status" name="status" required #status="ngModel"
+            nzPlaceHolder="{{ 'app.dashboard.purchaseorder-please-status' | translate }}">
+            <nz-option *ngFor="let s of statusKeys" 
+              nzLabel="{{ 'app.dashboard.purchaseorder-status-' + purchaseOrderStatus[s] | translate }}"
+              [nzValue]="s"
+            ></nz-option>
+            <!-- <nz-option nzLabel="{{ 'app.dashboard.purchaseorder-status-book' | translate }}"
+              nzValue="PurchaseOrderStatus.Book"></nz-option>
+            <nz-option nzLabel="{{ 'app.dashboard.purchaseorder-status-order' | translate }}"
+              nzValue="PurchaseOrderStatus.Order"></nz-option>
+            <nz-option nzLabel="{{ 'app.dashboard.purchaseorder-status-transporting' | translate }}"
+              nzValue="PurchaseOrderStatus.Transporting"></nz-option>
+            <nz-option nzLabel="{{ 'app.dashboard.purchaseorder-status-receipt' | translate }}"
+              nzValue="PurchaseOrderStatus.Receipt"></nz-option>
+            <nz-option nzLabel="{{ 'app.dashboard.purchaseorder-status-complete' | translate }}"
+              nzValue="PurchaseOrderStatus.Complete"></nz-option> -->
+          </nz-select>
+          <nz-form-explain *ngIf="(status.dirty || status.touched) && status.errors?.required">
+            {{ 'app.dashboard.purchaseorder-please-dest-address' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-operator' | translate }}">
+          <input nz-input name="operator" [ngModel]="purchaseOrderDto.operator" />
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col [nzXl]="{span:24, offset:0}" [nzLg]="{span:24}" [nzMd]="{span:24}" nzSm="24">
+        <se label="{{ 'app.dashboard.purchaseorder-comment' | translate }}">
+          <textarea nz-input [(ngModel)]="purchaseOrderDto.comment" name="comment"
+            [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+            placeholder="{{ 'app.dashboard.purchaseorder-please-comment' | translate }}"></textarea>
+        </se>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="false" nzTitle="{{ 'app.dashboard.purchaseorder-item-info' | translate }}">
+    <nz-table [nzData]="purchaseOrderDto.items" [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th>{{ 'app.dashboard.purchaseorder-item-number' | translate }}</th>
+          <th>{{ 'app.dashboard.purchaseorder-item-name'| translate }}</th>
+          <th>{{ 'app.dashboard.purchaseorder-item-price'| translate }}</th>
+          <th>{{ 'app.dashboard.purchaseorder-item-amount' | translate }}</th>
+          <th *ngIf="mode==='Add'">{{ 'app.operator' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of purchaseOrderDto.items; let i = index">
+          <td>
+            <span *ngIf="editIndex!==i">{{item.number}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <nz-input-group [nzAddOnAfter]="addOnAfterWarehouseNumberTemplate">
+                <input nz-input #itemNumber="ngModel" [ngModel]="editObj.number" name="itemNumber" readonly="readonly"
+                  reqiure placeholder="{{'app.dashboard.purchaseorder-please-item-number' | translate }}" />
+              </nz-input-group>
+              <nz-form-explain *ngIf="(itemNumber.dirty || itemNumber.touched) && itemNumber.errors?.required">
+                {{ 'app.dashboard.purchaseorder-please-item-number' | translate }}
+              </nz-form-explain>
+              <ng-template #addOnAfterWarehouseNumberTemplate>
+                <button nz-button nzType="primary" (click)="selectMaterialItem(i)" [disabled]="mode!=='Add'"
+                  nzSize="small" nzGhost>{{ 'app.select' | translate }}</button>
+              </ng-template>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.name}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemName="ngModel" [ngModel]="editObj.name" readonly="readonly" name="itemName" reqiure
+                placeholder="{{'app.dashboard.purchaseorder-please-item-name' | translate }}">
+              <nz-form-explain *ngIf="(itemName.dirty || itemName.touched) && itemName.errors?.required">
+                {{ 'app.dashboard.purchaseorder-please-item-name' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.price}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemPrice="ngModel" [ngModel]="editObj.price" name="itemPrice" readonly="readonly"
+                require placeholder="{{'app.dashboard.purchaseorder-please-item-price' | translate }}">
+              <nz-form-explain *ngIf="(itemPrice.dirty || itemPrice.touched) && itemPrice.errors?.required">
+                {{ 'app.dashboard.purchaseorder-please-item-price' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.amount}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemAmount="ngModel" [(ngModel)]="editObj.amount" name="itemAmount" require
+                placeholder="{{'app.dashboard.purchaseorder-please-item-amount' | translate }}">
+              <nz-form-explain *ngIf="(itemAmount.dirty || itemAmount.touched) && itemAmount.errors?.required">
+                {{ 'app.dashboard.purchaseorder-please-item-amount' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td *ngIf="mode==='Add'">
+            <span *ngIf="editIndex!==i">
+              <a (click)="editItem(i)">{{ 'app.edit' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <nz-popconfirm (nzOnConfirm)="delItem(i)" nzTitle="{{ 'app.confirm-delete' | translate }}">
+                <a nz-popconfirm>{{ 'app.delete' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+            <span *ngIf="editIndex===i">
+              <a (click)="saveItem(i)">{{ 'app.save' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <nz-popconfirm (nzOnConfirm)="cancelItem(i)" nzTitle="{{ 'app.confirm-cancel' | translate }}">
+                <a nz-popconfirm>{{ 'app.cancel' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <button *ngIf="editIndex===-1 && mode==='Add'" nz-button [nzType]="'dashed'" (click)="addItem()" nzBlock
+      class="mt-md">
+      <i nz-icon type="plus"></i>
+      <span>{{ 'app.dashboard.add-purchaseorder-item' | translate }}</span>
+    </button>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <button nz-button nzType="default" [hidden]="mode=='Add' || !auth[mode]" (click)="startPrint()" >{{ 'app.print' | translate }}</button>
+    <button nz-button nzType="default" [hidden]="mode=='Add' || !auth[mode]" (click)="startExport()" >{{ 'app.export' | translate }}</button>
+    <button nz-button type="primary" nzType="primary" [disabled]="!auth[mode] && !f.valid && purchaseOrderDto.items.length<=0"
+      (click)="submit()">{{ 'app.submit' | translate }}</button>
+  </footer-toolbar>
+</form>

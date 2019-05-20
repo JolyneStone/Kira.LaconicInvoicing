@@ -1,0 +1,72 @@
+<div class="alain-default__header-logo">
+  <a [routerLink]="['/']" class="alain-default__header-logo-link">
+    <!-- <img class="alain-default__header-logo-expanded" src="{{settings.app.logo_full}}"  alt="{{settings.app.name}}"
+      style="max-height:40px;" />
+    <img class="alain-default__header-logo-collapsed" src="{{settings.app.logo}}"  alt="{{settings.app.name}}"
+      style="max-height:30px;" /> -->
+    <div class="alain-default__header-logo-expanded" style="max-height:60px;">
+      <app-logo size="middle"></app-logo>
+    </div>
+    <div class="alain-default__header-logo-collapsed" style="max-height:40px;">
+      <app-logo size="small"></app-logo>
+    </div>
+  </a>
+</div>
+<div class="alain-default__nav-wrap">
+  <ul class="alain-default__nav">
+    <!-- Menu -->
+    <li>
+      <div class="alain-default__nav-item" (click)="toggleCollapsedSideabar()" style="color: currentColor">
+        <i nz-icon type="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+      </div>
+    </li>
+    <!-- Lock Page -->
+    <li class="hidden-mobile">
+        <div class="alain-default__nav-item" routerLink="/passport/lock">
+          <i nz-icon type="lock"></i>
+        </div>
+    </li>
+    <li class="hidden-mobile">
+      <app-lang-select></app-lang-select>
+    </li>
+  </ul>
+  <ul class="alain-default__nav">
+    <!-- Notify -->
+    <li>
+      <header-notify></header-notify>
+    </li>
+    <!-- App Icons -->
+    <!-- <li class="hidden-mobile">
+        <header-icon></header-icon>
+      </li> -->
+    <!-- Settings -->
+    <!-- <li class="hidden-mobile" *ngIf="user.name">
+        <nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
+          <div class="alain-default__nav-item" nz-dropdown>
+            <i class="setting"></i>
+          </div>
+          <div nz-menu style="width:200px;">
+            <div nz-menu-item>
+              <header-fullscreen></header-fullscreen>
+            </div>
+            <div nz-menu-item>
+              <header-storage></header-storage>
+            </div>
+          </div>
+        </nz-dropdown>
+      </li> -->
+    <li class="hidden-mobile">
+      <!-- <layout-user-menu></layout-user-menu> -->
+      <layout-user-menu *ngIf="user.name"></layout-user-menu>
+      <div *ngIf="!user.name">
+        <a [routerLink]="[ '/identity/login' ]">
+          <i class="anticon anticon-login"></i>{{ 'app.login.login' | translate }}
+        </a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a [routerLink]="[ '/identity/register' ]">
+          <i class="anticon anticon-plus-circle-o"></i>{{ 'app.register.register' | translate }}
+        </a>
+      </div>
+    </li>
+  </ul>
+</div>

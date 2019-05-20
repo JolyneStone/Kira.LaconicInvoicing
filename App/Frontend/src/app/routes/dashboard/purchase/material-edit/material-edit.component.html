@@ -1,0 +1,133 @@
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzTitle]="modalTitle"
+  [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="cancel()">
+  <ng-template #modalTitle>
+    {{ title }}
+  </ng-template>
+  <ng-template #modalContent>
+    <nz-tabset>
+      <nz-tab nzTitle="{{ 'app.base-info' | translate }}">
+        <form nz-form #f="ngForm" se-container="1">
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-name' | translate }}">
+                <input nz-input [(ngModel)]="materialDto.name" name="name" required #name="ngModel">
+                <nz-form-explain *ngIf="(name.dirty || name.touched) && name.errors?.required">
+                  {{ 'app.dashboard.material-please-name' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-number' | translate }}">
+                <nz-input-group [nzAddOnAfter]="addOnAfterTemplate">
+                  <input type="text" nz-input [(ngModel)]="materialDto.number" name="number" width="200px" required
+                    #number="ngModel" />
+                </nz-input-group>
+                <nz-form-explain *ngIf="(number.dirty || number.touched) && number.errors?.required">
+                  {{ 'app.dashboard.material-please-number' | translate }}</nz-form-explain>
+                <ng-template #addOnAfterTemplate>
+                  <button nz-button nzType="primary" (click)="getNewNumber()"
+                    [disabled]="!auth.GetNewNumber && mode!=='Add'" nzSize="small"
+                    nzGhost>{{ 'app.get' | translate }}</button>
+                </ng-template>
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-type' | translate }}">
+                <nz-select [(ngModel)]="materialDto.type" name="type" required #type="ngModel"
+                  nzPlaceHolder="{{ 'app.dashboard.material-please-type' | translate }}">
+                  <nz-option *ngFor="let type of types" [nzLabel]="type.name" [nzValue]="type.name">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="(type.dirty || type.touched) && type.errors?.required">
+                  {{ 'app.dashboard.material-please-type' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-brand' | translate }}">
+                <input nz-input [(ngModel)]="materialDto.brand" name="brand">
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-spec' | translate }}">
+                <input nz-input [(ngModel)]="materialDto.spec" name="spec" #spec="ngModel">
+                <nz-form-explain *ngIf="(spec.dirty || spec.touched) && spec.errors?.required">
+                  {{ 'app.dashboard.material-please-spec' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-unit' | translate }}">
+                <nz-select [(ngModel)]="materialDto.unit" name="unit" required #unit="ngModel"
+                  nzPlaceHolder="{{ 'app.dashboard.material-please-unit' | translate }}">
+                  <nz-option *ngFor="let u of units" [nzLabel]="u.name" [nzValue]="u.name">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="(unit.dirty || unit.touched) && unit.errors?.required">
+                  {{ 'app.dashboard.material-please-unit' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-price' | translate }}">
+                <input nz-input required [(ngModel)]="materialDto.price" #price="ngModel" name="price">
+                <nz-form-explain *ngIf="(price.dirty || price.touched) && price.errors?.required">
+                  {{ 'app.dashboard.material-please-price' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-operator' | translate }}">
+                <input nz-input [(ngModel)]="materialDto.operator" name="operator">
+              </se>
+            </nz-col>
+          </nz-row>
+          <!-- <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-wholesale-price' | translate }}">
+                <input nz-input [(ngModel)]="materialDto.wholesalePrice" name="wholesalePrice" required
+                  #wholesalePrice="ngModel">
+                <nz-form-explain
+                  *ngIf="(wholesalePrice.dirty || wholesalePrice.touched) && wholesalePrice.errors?.required">
+                  {{ 'app.dashboard.material-please-wholesale-price' | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+                <se label="{{ 'app.dashboard.material-cost-price' | translate }}">
+                  <input nz-input [(ngModel)]="materialDto.costPrice" name="costPrice">
+                </se>
+              </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="12" nzMd="12" nzSm="24">
+              <se label="{{ 'app.dashboard.material-retail-price' | translate }}">
+                <input nz-input [(ngModel)]="materialDto.retailPrice" name="retailPrice">
+              </se>
+            </nz-col>
+          </nz-row> -->
+          <nz-row nzGutter="16">
+            <nz-col nzLg="24" nzMd="24" nzSm="24">
+              <se label="{{ 'app.dashboard.material-comment' | translate }}">
+                <textarea nz-input [(ngModel)]="materialDto.comment" name="comment"
+                  [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+                  placeholder="{{ 'app.dashboard.material-please-comment' | translate }}"></textarea>
+              </se>
+            </nz-col>
+          </nz-row>
+        </form>
+        <div class="modal-footer">
+          <button nz-button [nzType]="'default'" (click)="cancel()">
+            {{ "app.cancel" | translate }}
+          </button>
+          <button nz-button [nzType]="'primary'" [disabled]="!auth[mode] && !f.valid" (click)="ok()">
+            {{ "app.ok" | translate }}
+          </button>
+        </div>
+      </nz-tab>
+      <nz-tab [nzDisabled]='!auth.GetVendors' nzTitle="{{ 'app.correlative-information' | translate }}">
+        <app-data-list #dataList></app-data-list>
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+</nz-modal>

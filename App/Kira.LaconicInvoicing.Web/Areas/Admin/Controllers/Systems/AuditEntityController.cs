@@ -1,17 +1,8 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="AuditEntityController.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-08-02 14:57</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-
+using Kira.LaconicInvoicing.Service.Systems;
 using Kira.LaconicInvoicing.Systems;
 using Kira.LaconicInvoicing.Systems.Dtos;
 using Kira.LaconicInvoicing.Systems.Entities;

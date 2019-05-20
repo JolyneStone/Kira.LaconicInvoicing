@@ -1,0 +1,76 @@
+<div nz-row nzGutter="24" class="py-lg">
+  <div nz-col nzMd="24" nzLg="8">
+    <nz-card [nzBordered]="false" class="mb-lg">
+      <ng-container>
+        <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
+          <nz-row nzGutter="16">
+            <nz-col nzLg="24" nzMd="24" nzSm="24">
+              <se label="{{ 'app.account.notice.author' | translate }}"
+                error="{{ 'app.account.notice.please-author' | translate }}">
+                <input nz-input [(ngModel)]="noticeDto.author" name="author" #author="ngModel" required>
+                <nz-form-explain *ngIf="(author.dirty || author.touched) && author.errors?.email">
+                  {{ "aapp.account.notice.please-author" | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="24" nzMd="24" nzSm="24">
+              <se label="{{ 'app.account.notice.content' | translate }}">
+                <textarea nz-input required #content [(ngModel)]="noticeDto.content" name="content"
+                  [nzAutosize]="{ minRows: 5, maxRows: 20 }"
+                  placeholder="{{ 'app.account.notice.please-content' | translate }}"></textarea>
+                  <nz-form-explain *ngIf="(content.dirty || content.touched) && content.errors?.email">
+                      {{ "aapp.account.notice.please-content" | translate }}</nz-form-explain>
+              </se>
+            </nz-col>
+          </nz-row>
+          <nz-row nzGutter="16">
+            <nz-col nzLg="24" nzMd="24" nzSm="24">
+              <se>
+                <button nz-button nzType="primary" type="submit" nzBlock
+                  [disabled]="!auth.Add && f.invalid">{{ 'app.account.settings.save' | translate }}</button>
+              </se>
+            </nz-col>
+          </nz-row>
+        </form>
+      </ng-container>
+    </nz-card>
+  </div>
+  <div nz-col nzMd="24" nzLg="16">
+    <nz-card class="tabsCard" [nzBordered]="false" [nzTitle]="tagTitleTpl">
+      <ng-template #tagTitleTpl>
+        <nz-tabset nzSize="large" nzSelectedIndex="0">
+          <nz-tab nzTitle="{{ 'app.account.notice' | translate }}">
+            <nz-list class="loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'" [nzRenderItem]="item"
+              [nzLoadMore]="loadMore">
+              <ng-template #item let-item>
+                <nz-list-item [nzContent]="item.loading ? '' : noticeContent"
+                  [nzActions]="item.loading ? [] : [deleteAction]">
+                  <ng-template #deleteAction>
+                    <a href="javascript:" (click)="delete(item)"><i nz-icon nzType="close"></i></a>
+                  </ng-template>
+                  <ng-template #noticeContent>
+                    <nz-comment nzAuthor="{{ item.author }}"
+                      nzDatetime="{{ item.dateTime | date: 'yyyy-MM-dd hh:mm:ss' }}">
+                      <nz-comment-content>
+                        <p>
+                          {{ item.content }}
+                        </p>
+                      </nz-comment-content>
+                    </nz-comment>
+                  </ng-template>
+                </nz-list-item>
+              </ng-template>
+              <ng-template #loadMore>
+                <div class="loadmore">
+                  <button nz-button *ngIf="!loadingMore"
+                    (click)="onLoadMore()">{{ 'app.loading-more' | translate }}</button>
+                </div>
+              </ng-template>
+            </nz-list>
+          </nz-tab>
+        </nz-tabset>
+      </ng-template>
+    </nz-card>
+  </div>
+</div>

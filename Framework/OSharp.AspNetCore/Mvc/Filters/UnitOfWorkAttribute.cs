@@ -1,18 +1,7 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="UnitOfWorkAttribute.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-03-09 22:07</last-date>
-// -----------------------------------------------------------------------
-
-using System;
-
+﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
-
 using OSharp.AspNetCore.UI;
 using OSharp.Data;
 using OSharp.Dependency;
@@ -53,7 +42,7 @@ namespace OSharp.AspNetCore.Mvc.Filters
                 {
                     type = ajax.Type;
                     message = ajax.Content;
-                    if (ajax.Successed())
+                    if (ajax.IsSuccessed())
                     {
                         _unitOfWorkManager?.Commit();
                     }
@@ -66,7 +55,7 @@ namespace OSharp.AspNetCore.Mvc.Filters
                 {
                     type = ajax.Type;
                     message = ajax.Content;
-                    if (ajax.Successed())
+                    if (ajax.IsSuccessed())
                     {
                         _unitOfWorkManager?.Commit();
                     }

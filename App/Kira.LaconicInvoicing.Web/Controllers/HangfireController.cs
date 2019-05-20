@@ -10,7 +10,7 @@ namespace Kira.LaconicInvoicing.Web.Controllers
 {
     [Description("网站-Hangfire后台任务")]
     [ModuleInfo(Order = 4)]
-    public class Hangfire3Controller : Controller
+    public class Hangfire3Controller : BaseApiController
     {
         [HttpGet]
         [Description("Hangfire首页")]

@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <div class="modal-title">{{ record.name }}</div>
+</div>
+<div>
+ <div nz-row>
+   <ng-container [ngTemplateOutlet]="record.tpl == 'select'? selectTpl: textTpl"></ng-container>
+ </div>
+ <ng-template #selectTpl>
+   <div nz-col nzSpan="6">
+    <nz-select *ngIf="!isAdding" style="width: 200px;"
+      (ngModelChange)="change($event)"
+      [(ngModel)]="selectValue" nzSize="large">
+      <nz-option *ngFor="let option of value" [nzLabel]="option.name" [nzValue]="option.code"></nz-option>
+    </nz-select>
+    <input nz-input *ngIf="isAdding" [(ngModel)]="newName" nzSize="large" />
+  </div>
+  <div nz-col nzSpan="6" [nzPush]="1">
+    <input nz-input [(ngModel)]="newValue" nzSize="large" />
+  </div>
+  <div nz-col nzSpan="9" [nzPush]="2">
+    <button nz-button nzType="primary" (click)="add()" [disabled]="!auth[record.add]" >{{ "app.add" | translate }}</button>
+    <button nz-button nzType="default" (click)="update()" [disabled]="!auth[record.update]" >{{ "app.update" | translate }}</button>
+    <button nz-button nzType="danger" (click)="remove()" [disabled]="!auth[record.delete]" >{{ "app.delete" | translate }}</button>
+  </div>
+ </ng-template>
+ <ng-template #textTpl>
+    <input nz-input [(ngModel)]="value" nzSize="large" />
+ </ng-template>
+</div>
+<div class="modal-footer">
+  <button nz-button [nzType]="'default'" (click)="cancel()">
+      {{ "app.cancel" | translate }}
+  </button>
+  <button nz-button [nzType]="'primary'" (click)="ok()">
+      {{ "app.ok" | translate }}
+  </button>
+</div>

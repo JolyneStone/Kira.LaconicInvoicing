@@ -21,7 +21,7 @@ namespace OSharp.CodeGeneration.Tests
             ProjectMetadata project = new ProjectMetadata()
             {
                 Name = "XXX系统",
-                Company = "柳柳软件",
+                Company = "Kira Yoshikage",
                 Copyright = "Copyright (c) 2014-2019 OSharp. All rights reserved.",
                 Creator = "郭明锋",
                 SiteUrl = "https://www.66soft.net",

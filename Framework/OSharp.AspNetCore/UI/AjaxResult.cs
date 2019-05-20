@@ -1,14 +1,6 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="AjaxResult.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2017 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2017-09-01 20:38</last-date>
-// -----------------------------------------------------------------------
-
-using OSharp.Data;
-
+﻿using OSharp.Data;
+using System;
+using System.Threading.Tasks;
 
 namespace OSharp.AspNetCore.UI
 {
@@ -59,7 +51,7 @@ namespace OSharp.AspNetCore.UI
         /// <summary>
         /// 是否成功
         /// </summary>
-        public bool Successed()
+        public bool IsSuccessed()
         {
             return Type == AjaxResultType.Success;
         }
@@ -67,7 +59,7 @@ namespace OSharp.AspNetCore.UI
         /// <summary>
         /// 是否错误
         /// </summary>
-        public bool Error()
+        public bool IsError()
         {
             return Type == AjaxResultType.Error;
         }
@@ -75,9 +67,114 @@ namespace OSharp.AspNetCore.UI
         /// <summary>
         /// 成功的AjaxResult
         /// </summary>
-        public static AjaxResult Success(object data = null)
+        public AjaxResult Success(object data = null)
+        {
+            this.Type = AjaxResultType.Success;
+            this.Content = "操作执行成功";
+            this.Data = data;
+            return this;
+        }
+
+        /// <summary>
+        /// 失败的AjaxResult
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public AjaxResult Error(string content = null)
+        {
+            this.Type = AjaxResultType.Error;
+            this.Content = content;
+            return this;
+        }
+
+        /// <summary>
+        /// 成功的AjaxResult
+        /// </summary>
+        public static AjaxResult CreateSuccess(object data = null)
         {
             return new AjaxResult("操作执行成功", AjaxResultType.Success, data);
+        }
+
+        /// <summary>
+        /// 失败的AjaxResult
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static AjaxResult CreateError(string content = null)
+        {
+            return new AjaxResult(content, AjaxResultType.Error);
+        }
+
+        /// <summary>
+        /// 执行业务方法
+        /// </summary>
+        /// <param name="business"></param>
+        /// <returns></returns>
+        public static AjaxResult Business(Func<AjaxResult> business)
+        {
+            try
+            {
+                return business();
+            }
+            catch (Exception ex)
+            {
+                return new AjaxResult(ex.GetBaseException().Message, AjaxResultType.Error);
+            }
+        }
+
+        /// <summary>
+        /// 执行业务方法
+        /// </summary>
+        /// <param name="business"></param>
+        /// <returns></returns>
+        public static async Task<AjaxResult> Business(Func<Task<AjaxResult>> business)
+        {
+            try
+            {
+                return await business();
+            }
+            catch (Exception ex)
+            {
+                return new AjaxResult(ex.GetBaseException().Message, AjaxResultType.Error);
+            }
+        }
+
+        /// <summary>
+        /// 执行业务方法
+        /// </summary>
+        /// <param name="business"></param>
+        /// <returns></returns>
+        public static async Task<AjaxResult> Business(Func<AjaxResult, Task> business)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                await business(result);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new AjaxResult(ex.GetBaseException().Message, AjaxResultType.Error);
+            }
+        }
+
+        /// <summary>
+        /// 执行业务方法
+        /// </summary>
+        /// <param name="business"></param>
+        /// <returns></returns>
+        public static AjaxResult Business(Action<AjaxResult> business)
+        {
+            var result = new AjaxResult();
+            try
+            {
+                business(result);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new AjaxResult(ex.GetBaseException().Message, AjaxResultType.Error);
+            }
         }
     }
 }

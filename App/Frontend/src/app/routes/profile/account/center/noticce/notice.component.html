@@ -1,0 +1,24 @@
+<nz-list class="loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'" [nzRenderItem]="item"
+  [nzLoadMore]="loadMore">
+  <ng-template #item let-item>
+    <nz-list-item [nzContent]="item.loading ? '' : noticeContent" [nzActions]="item.loading ? [] : [deleteAction]">
+      <ng-template #deleteAction>
+        <a href="javascript:" (click)="delete(item)"><i nz-icon nzType="close"></i></a>
+      </ng-template>
+      <ng-template #noticeContent>
+        <nz-comment nzAuthor="{{ item.author }}" nzDatetime="{{ item.dateTime | date: 'yyyy-MM-dd hh:mm:ss' }}">
+          <nz-comment-content>
+            <p [ngClass]="{ 'unread': !item.isRead }" (click)="read(item, $event)">
+              {{ item.content }}
+            </p>
+          </nz-comment-content>
+        </nz-comment>
+      </ng-template>
+    </nz-list-item>
+  </ng-template>
+  <ng-template #loadMore>
+    <div class="loadmore">
+      <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">{{ 'app.loading-more' | translate }}</button>
+    </div>
+  </ng-template>
+</nz-list>

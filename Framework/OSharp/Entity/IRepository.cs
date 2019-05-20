@@ -1,20 +1,9 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="IRepository.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2017 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2017-08-16 22:49</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
 using OSharp.Data;
-
 
 namespace OSharp.Entity
 {
@@ -293,6 +282,21 @@ namespace OSharp.Entity
         /// <param name="key">实体主键</param>
         /// <returns>符合主键的实体，不存在时返回null</returns>
         Task<TEntity> GetAsync(TKey key);
+
+        /// <summary>
+        /// 查找第一个符合条件的数据
+        /// </summary>
+        /// <param name="predicate">数据查询谓语表达式</param>
+        /// <returns>符合条件的实体，不存在时返回null</returns>
+        Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// 查找第一个符合条件的数据
+        /// </summary>
+        /// <param name="predicate">数据查询谓语表达式</param>
+        /// <param name="filterByDataAuth">是否使用数据权限过滤，数据权限一般用于存在用户实例的查询，系统查询不启用数据权限过滤</param>
+        /// <returns>符合条件的实体，不存在时返回null</returns>
+        Task<TEntity> GetFirstAsync(Expression<Func<TEntity, bool>> predicate, bool filterByDataAuth);
 
         #endregion
     }

@@ -1,0 +1,285 @@
+<page-header title="{{ 'app.dashboard.transferorder-management' | translate }}"></page-header>
+<form nz-form #f="ngForm" se-container="1" [nzLayout]="'vertical'">
+  <nz-card [nzBordered]="false" nzTitle="{{ 'app.dashboard.transferorder-base-info' | translate }}">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterNumberTemplate">
+            <input nz-input #number="ngModel" name="number" required [(ngModel)]="transferOrderDto.number"
+              placeholder="{{ 'app.dashboard.transferorder-please-number' | translate}}" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="(number.dirty || number.touched) && number.errors?.required">
+            {{ 'app.dashboard.transferorder-please-number' | translate }}
+          </nz-form-explain>
+          <ng-template #addOnAfterNumberTemplate>
+            <button nz-button nzType="primary" (click)="getNewNumber()" [disabled]="!auth.GetNewNumber && mode!=='Add'"
+              nzSize="small" nzGhost>{{ 'app.get' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-source-warehouse-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterSourceWarehouseNumberTemplate">
+            <input nz-input [(ngModel)]="transferOrderDto.sourceWarehouseNumber" name="supplier" required
+              #sourceWarehouseNumber="ngModel"
+              placeholder="{{ 'app.dashboard.transferorder-please-source-warehouse-number' | translate }}">
+          </nz-input-group>
+          <nz-form-explain
+            *ngIf="(sourceWarehouseNumber.dirty || sourceWarehouseNumber.touched) && sourceWarehouseNumber.errors?.required">
+            {{ 'app.dashboard.transferorder-please-source-warehouse-number' | translate }}</nz-form-explain>
+          <ng-template #addOnAfterSourceWarehouseNumberTemplate>
+            <button nz-button nzType="primary" (click)="selectWarehouse(true)" [disabled]="mode!=='Add'" nzSize="small"
+              nzGhost>{{ 'app.select' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-source-warehouse-name' | translate }}">
+          <input nz-input required #sourceWarehouseName="ngModel" name="supplierNo"
+            [(ngModel)]="transferOrderDto.sourceWarehouseName"
+            placeholder="{{ 'app.dashboard.transferorder-please-source-warehouse-name' | translate}}" />
+          <nz-form-explain
+            *ngIf="(sourceWarehouseName.dirty || sourceWarehouseName.touched) && sourceWarehouseName.errors?.required">
+            {{ 'app.dashboard.transferorder-please-source-warehouse-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-source-address' | translate }}">
+          <input nz-input required #sourceAddress="ngModel" name="sourceAddress"
+            [(ngModel)]="transferOrderDto.sourceAddress"
+            placeholder="{{ 'app.dashboard.transferorder-please-source-address' | translate}}" />
+          <nz-form-explain *ngIf="(sourceAddress.dirty || sourceAddress.touched) && sourceAddress.errors?.required">
+            {{ 'app.dashboard.transferorder-please-source-address' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-dest-warehouse-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterDestWarehouseNumberTemplate">
+            <input nz-input required #destWarehouseNumber="ngModel" name="destWarehouseNumber"
+              [(ngModel)]="transferOrderDto.destWarehouseNumber"
+              placeholder="{{ 'app.dashboard.transferorder-please-dest-warehouse-number' | translate}}" />
+          </nz-input-group>
+          <nz-form-explain
+            *ngIf="(destWarehouseNumber.dirty || destWarehouseNumber.touched) && destWarehouseNumber.errors?.required">
+            {{ 'app.dashboard.transferorder-please-dest-warehouse-number' | translate }}
+          </nz-form-explain>
+          <ng-template #addOnAfterDestWarehouseNumberTemplate>
+            <button nz-button nzType="primary" (click)="selectWarehouse(false)" [disabled]="mode!=='Add'" nzSize="small"
+              nzGhost>{{ 'app.select' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-dest-warehouse-name' | translate }}">
+          <input nz-input required #destWarehouseName="ngModel" name="warehouse-name"
+            [(ngModel)]="transferOrderDto.destWarehouseName"
+            placeholder="{{ 'app.dashboard.transferorder-please-dest-warehouse-name' | translate}}" />
+          <nz-form-explain
+            *ngIf="(destWarehouseName.dirty || destWarehouseName.touched) && destWarehouseName.errors?.required">
+            {{ 'app.dashboard.transferorder-please-dest-warehouse-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-dest-address' | translate }}">
+          <input nz-input #destAddress="ngModel" name="destAddress" [(ngModel)]="transferOrderDto.destAddress"
+            placeholder="{{ 'app.dashboard.transferorder-please-dest-address' | translate}}" />
+          <nz-form-explain *ngIf="(destAddress.dirty || destAddress.touched) && destAddress.errors?.required">
+            {{ 'app.dashboard.transferorder-please-dest-address' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-delivery-man' | translate }}">
+          <input nz-input #deliveryMan="ngModel" name="deliveryMan" [(ngModel)]="transferOrderDto.deliveryMan"
+            placeholder="{{ 'app.dashboard.transferorder-please-delivery-man' | translate}}" />
+          <nz-form-explain *ngIf="(deliveryMan.dirty || deliveryMan.touched) && deliveryMan.errors?.required">
+            {{ 'app.dashboard.transferorder-please-delivery-man' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-delivery-man-contact' | translate }}">
+          <input nz-input #deliveryManContact="ngModel" name="deliveryManContact"
+            [(ngModel)]="transferOrderDto.deliveryManContact"
+            placeholder="{{ 'app.dashboard.transferorder-please-delivery-man-contact' | translate}}" />
+          <nz-form-explain
+            *ngIf="(deliveryManContact.dirty || deliveryManContact.touched) && deliveryManContact.errors?.required">
+            {{ 'app.dashboard.transferorder-please-delivery-man-contact' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-waybill-no' | translate }}">
+          <input nz-input #waybillNo="ngModel" name="waybillNo" [(ngModel)]="transferOrderDto.waybillNo"
+            placeholder="{{ 'app.dashboard.transferorder-please-waybill-no' | translate}}" />
+          <nz-form-explain *ngIf="(waybillNo.dirty || waybillNo.touched) && waybillNo.errors?.required">
+            {{ 'app.dashboard.transferorder-please-warehouse-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-consignor' | translate }}">
+          <input nz-input required #consignor="ngModel" name="consignor" [(ngModel)]="transferOrderDto.consignor"
+            placeholder="{{ 'app.dashboard.transferorder-please-consignor' | translate}}" />
+          <nz-form-explain *ngIf="(consignor.dirty || consignor.touched) && consignor.errors?.required">
+            {{ 'app.dashboard.transferorder-please-consignor' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-consignor-contact' | translate }}">
+          <input nz-input #consignorContact="ngModel" name="consignorContact"
+            [(ngModel)]="transferOrderDto.consignorContact"
+            placeholder="{{ 'app.dashboard.transferorder-please-consignor-contact' | translate}}" />
+          <nz-form-explain
+            *ngIf="(consignorContact.dirty || consignorContact.touched) && consignorContact.errors?.required">
+            {{ 'app.dashboard.transferorder-please-consignor-contact' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-consignee' | translate }}">
+          <input nz-input required #consignee="ngModel" name="consignee" [(ngModel)]="transferOrderDto.consignee"
+            placeholder="{{ 'app.dashboard.transferorder-please-consignee' | translate}}" />
+          <nz-form-explain *ngIf="(consignee.dirty || consignee.touched) && consignee.errors?.required">
+            {{ 'app.dashboard.transferorder-please-consignee' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-consignee-contact' | translate }}">
+          <input nz-input #consigneeContact="ngModel" name="consigneeContact"
+            [(ngModel)]="transferOrderDto.consigneeContact"
+            placeholder="{{ 'app.dashboard.transferorder-please-consignee-contact' | translate}}" />
+          <nz-form-explain
+            *ngIf="(consigneeContact.dirty || consigneeContact.touched) && consigneeContact.errors?.required">
+            {{ 'app.dashboard.transferorder-please-consignee-contact' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-operator' | translate }}">
+          <input nz-input name="operator" [ngModel]="transferOrderDto.operator" />
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col [nzXl]="{span:24, offset:0}" [nzLg]="{span:24}" [nzMd]="{span:24}" nzSm="24">
+        <se label="{{ 'app.dashboard.transferorder-comment' | translate }}">
+          <textarea nz-input [(ngModel)]="transferOrderDto.comment" name="comment"
+            [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+            placeholder="{{ 'app.dashboard.transferorder-please-comment' | translate }}"></textarea>
+        </se>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="false" nzTitle="{{ 'app.dashboard.transferorder-item-info' | translate }}">
+    <nz-table [nzData]="transferOrderDto.items" [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th>{{ 'app.dashboard.transferorder-item-number' | translate }}</th>
+          <th>{{ 'app.dashboard.transferorder-item-name'| translate }}</th>
+          <th>{{ 'app.dashboard.transferorder-item-spec'| translate }}</th>
+          <th>{{ 'app.dashboard.transferorder-item-amount' | translate }}</th>
+          <th *ngIf="mode==='Add'">{{ 'app.operator' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of transferOrderDto.items; let i = index">
+          <td>
+            <span *ngIf="editIndex!==i">{{item.number}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <nz-input-group [nzAddOnBefore]="addOnBeforeMaterialNumberTemplate"
+                [nzAddOnAfter]="addOnAfterProductNumberTemplate">
+                <input nz-input #itemNumber="ngModel" [ngModel]="editObj.number" name="itemNumber" readonly="readonly"
+                  reqiure placeholder="{{'app.dashboard.transferorder-item-please-number' | translate }}" />
+              </nz-input-group>
+              <nz-form-explain *ngIf="(itemNumber.dirty || itemNumber.touched) && itemNumber.errors?.required">
+                {{ 'app.dashboard.transferorder-item-please-number' | translate }}
+              </nz-form-explain>
+              <ng-template #addOnBeforeMaterialNumberTemplate>
+                <button nz-button nzType="primary" (click)="selectMaterialItem(i)" [disabled]="mode!=='Add'"
+                  nzSize="small" nzGhost>{{ 'app.dashboard.simplify-material' | translate }}</button>
+              </ng-template>
+              <ng-template #addOnAfterProductNumberTemplate>
+                <button nz-button nzType="primary" (click)="selectProductItem(i)" [disabled]="mode!=='Add'"
+                  nzSize="small" nzGhost>{{ 'app.dashboard.simplify-product' | translate }}</button>
+              </ng-template>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.name}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemName="ngModel" [ngModel]="editObj.name" readonly="readonly" name="itemName" reqiure
+                placeholder="{{'app.dashboard.transferorder-item-please-name' | translate }}">
+              <nz-form-explain *ngIf="(itemName.dirty || itemName.touched) && itemName.errors?.required">
+                {{ 'app.dashboard.transferorder-item-please-name' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.spec}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemSpec="ngModel" [ngModel]="editObj.spec" name="itemSpec" readonly="readonly" require
+                placeholder="{{'app.dashboard.transferorder-item-please-spec' | translate }}">
+              <nz-form-explain *ngIf="(itemSpec.dirty || itemSpec.touched) && itemSpec.errors?.required">
+                {{ 'app.dashboard.transferorder-item-please-goods-category' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.amount}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemAmount="ngModel" [(ngModel)]="editObj.amount" name="itemAmount" require
+                placeholder="{{'app.dashboard.transferorder-item-please-amount' | translate }}">
+              <nz-form-explain *ngIf="(itemAmount.dirty || itemAmount.touched) && itemAmount.errors?.required">
+                {{ 'app.dashboard.transferorder-item-please-amount' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td *ngIf="mode==='Add'">
+            <span *ngIf="editIndex!==i">
+              <a (click)="editItem(i)">{{ 'app.edit' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <nz-popconfirm (nzOnConfirm)="delItem(i)" nzTitle="{{ 'app.confirm-delete' | translate }}">
+                <a nz-popconfirm>{{ 'app.delete' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+            <span *ngIf="editIndex===i">
+              <a (click)="saveItem(i)">{{ 'app.save' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <nz-popconfirm (nzOnConfirm)="cancelItem(i)" nzTitle="{{ 'app.confirm-cancel' | translate }}">
+                <a nz-popconfirm>{{ 'app.cancel' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <button *ngIf="editIndex===-1 && mode==='Add'" nz-button [nzType]="'dashed'" (click)="addItem()" nzBlock
+      class="mt-md">
+      <i nz-icon type="plus"></i>
+      <span>{{ 'app.dashboard.add-transferorder-item' | translate }}</span>
+    </button>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <button nz-button nzType="default" [hidden]="mode=='Add' || !auth[mode]"
+      (click)="startPrint()">{{ 'app.print' | translate }}</button>
+    <button nz-button nzType="default" [hidden]="mode=='Add' || !auth[mode]"
+      (click)="startExport()">{{ 'app.export' | translate }}</button>
+    <button nz-button type="primary" nzType="primary"
+      [disabled]="!auth[mode] && !f.valid && transferOrderDto.items.length<=0"
+      (click)="submit()">{{ 'app.submit' | translate }}</button>
+  </footer-toolbar>
+</form>

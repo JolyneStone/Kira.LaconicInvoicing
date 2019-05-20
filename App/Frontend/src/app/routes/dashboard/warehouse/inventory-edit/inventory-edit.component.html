@@ -1,0 +1,62 @@
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzTitle]="modalTitle"
+  [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="cancel()">
+  <ng-template #modalTitle>
+    {{ title }}
+  </ng-template>
+  <ng-template #modalContent>
+    <form nz-form #f="ngForm" se-container="1">
+      <nz-row nzGutter="16">
+        <nz-col nzLg="12" nzMd="12" nzSm="24">
+          <se label="{{ 'app.dashboard.inventory-number' | translate }}">
+            <nz-input-group [nzAddOnAfter]="addOnAfterNumberTemplate">
+              <input type="text" nz-input [(ngModel)]="inventoryDto.number" [disabled]="mode!=='Add'" name="number" width="200px" required
+                #number="ngModel" />
+            </nz-input-group>
+            <nz-form-explain *ngIf="(number.dirty || number.touched) && number.errors?.required">
+              {{ 'app.dashboard.inventory-please-number' | translate }}</nz-form-explain>
+              <ng-template #addOnAfterNumberTemplate>
+                  <button nz-button nzType="primary" (click)="selectItem()" [disabled]="mode!=='Add'"
+                    nzSize="small" nzGhost>{{ 'app.select' | translate }}</button>
+                </ng-template>
+          </se>
+        </nz-col>
+        <nz-col nzLg="12" nzMd="12" nzSm="24">
+          <se label="{{ 'app.dashboard.inventory-name' | translate }}">
+            <input nz-input [(ngModel)]="inventoryDto.name" name="name" required #name="ngModel" [disabled]="mode!=='Add'">
+            <nz-form-explain *ngIf="(name.dirty || name.touched) && name.errors?.required">
+              {{ 'app.dashboard.inventory-please-name' | translate }}</nz-form-explain>
+          </se>
+        </nz-col>
+      </nz-row>
+      <nz-row nzGutter="16">
+        <nz-col nzLg="12" nzMd="12" nzSm="24">
+          <se label="{{ 'app.dashboard.inventory-goods-category' | translate }}">
+            <nz-select [(ngModel)]="goodsCategoryData" name="goodsCategory" required #goodsCategory="ngModel"
+              nzPlaceHolder="{{ 'app.dashboard.inventory-please-goods-category' | translate }}" [disabled]="mode!=='Add'">
+              <nz-option *ngFor="let s of goodsCategoryKeys"
+                nzLabel="{{ 'app.dashboard.goods-category-' + goodsCategoryStatus[s] | translate }}" [nzValue]="s">
+              </nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="(goodsCategory.dirty || goodsCategory.touched) && goodsCategory.errors?.required">
+              {{ 'app.dashboard.inventory-please-goods-category' | translate }}</nz-form-explain>
+          </se>
+        </nz-col>
+        <nz-col nzLg="12" nzMd="12" nzSm="24">
+          <se label="{{ 'app.dashboard.inventory-amount' | translate }}">
+            <input nz-input [(ngModel)]="inventoryDto.amount" required name="amount" #amount="ngModel">
+            <nz-form-explain *ngIf="(amount.dirty || amount.touched) && amount.errors?.required">
+              {{ 'app.dashboard.inventory-please-amount' | translate }}</nz-form-explain>
+          </se>
+        </nz-col>
+      </nz-row>
+    </form>
+    <div class="modal-footer">
+      <button nz-button [nzType]="'default'" (click)="cancel()">
+        {{ "app.cancel" | translate }}
+      </button>
+      <button nz-button [nzType]="'primary'" [disabled]="!auth[mode] && !f.valid" (click)="ok()">
+        {{ "app.ok" | translate }}
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>

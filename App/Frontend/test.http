@@ -1,0 +1,28 @@
+@Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2IiwidW5pcXVlX25hbWUiOiJBZG1pbiIsIm5iZiI6MTU1NDc5MzAzMiwiZXhwIjoxNTU1Mzk3ODMyLCJpYXQiOjE1NTQ3OTMwMzIsImlzcyI6IktpcmEuTGFjb25pY0ludm9pY2luZyBzZXJ2ZXIiLCJhdWQiOiJLaXJhLkxhY29uaWNJbnZvaWNpbmcgY2xpZW50In0.b7AbIU6YvrhLalhSTcnYVHMU-xbMLA7QknPSnabpJ5k
+
+###
+POST /api/Purcashase/Vendor/AddVendor HTTP/1.1
+Host: localhost:7001
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2IiwidW5pcXVlX25hbWUiOiJBZG1pbiIsIm5iZiI6MTU1NDc5MzAzMiwiZXhwIjoxNTU1Mzk3ODMyLCJpYXQiOjE1NTQ3OTMwMzIsImlzcyI6IktpcmEuTGFjb25pY0ludm9pY2luZyBzZXJ2ZXIiLCJhdWQiOiJLaXJhLkxhY29uaWNJbnZvaWNpbmcgY2xpZW50In0.b7AbIU6YvrhLalhSTcnYVHMU-xbMLA7QknPSnabpJ5k
+{
+    "name":"Hendry",
+    "number":"61888",
+    "type":"111"
+}
+
+###
+POST /api/Purcashase/Vendor/Search HTTP/1.1
+Host: localhost:7001
+content-type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2IiwidW5pcXVlX25hbWUiOiJBZG1pbiIsIm5iZiI6MTU1NDc5MzAzMiwiZXhwIjoxNTU1Mzk3ODMyLCJpYXQiOjE1NTQ3OTMwMzIsImlzcyI6IktpcmEuTGFjb25pY0ludm9pY2luZyBzZXJ2ZXIiLCJhdWQiOiJLaXJhLkxhY29uaWNJbnZvaWNpbmcgY2xpZW50In0.b7AbIU6YvrhLalhSTcnYVHMU-xbMLA7QknPSnabpJ5k
+{
+    "pageSize": 20,
+    "pageIndex": 1
+}
+
+###
+POST /api/Test3/Get HTTP/1.1
+Host: localhost:7001
+content-type: application/json;charset=UTF-8
+

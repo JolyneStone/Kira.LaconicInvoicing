@@ -95,7 +95,6 @@ namespace OSharp.Entity
 
             dbContext.UnitOfWork = this;
             _dbContexts.Add(dbContext);
-
             return dbContext;
         }
 

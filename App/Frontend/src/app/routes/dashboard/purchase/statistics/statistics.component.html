@@ -1,0 +1,90 @@
+<page-header title="{{ 'app.dashboard.statistics-analysis' | translate }}"></page-header>
+<nz-card nzTitle="{{ 'app.dashboard.trend-statistics-analysis' | translate }}" *ngIf="auth['TrendStatisticsAnalysis']">
+  <div class="content__title">
+    <div class="blank-grow"></div>
+    <div class="data-range">
+      <span>{{ 'app.dashboard.time-range' | translate }}: </span>
+      <nz-select [(ngModel)]="period" name="period" (ngModelChange)="trendPeriodChange($event)" style="width:100px;">
+        <nz-option *ngFor="let p of periodKeys" nzLabel="{{ 'app.' + periodStatus[p] | translate }}" [nzValue]="p">
+        </nz-option>
+      </nz-select>
+      <ng-container *ngIf="period == 0">
+        &nbsp;
+        <span>{{ 'app.start-datetime' | translate }}: </span>
+        <nz-month-picker [nzFormat]="monthFormat" [(ngModel)]="trendStartDate"></nz-month-picker>
+        &nbsp;
+        <span>{{ 'app.end-datetime' | translate }}: </span>
+        <nz-month-picker [nzFormat]="monthFormat" [(ngModel)]="trendEndDate"></nz-month-picker>
+      </ng-container>
+      <ng-container *ngIf="period == 1">
+        &nbsp;
+        <span>{{ 'app.start-datetime' | translate }}: </span>
+        <nz-year-picker [nzFormat]="yearFormat" [(ngModel)]="trendStartDate"></nz-year-picker>
+        &nbsp;
+        <span>{{ 'app.end-datetime' | translate }}: </span>
+        <nz-year-picker [nzFormat]="yearFormat" [(ngModel)]="trendEndDate"></nz-year-picker>
+      </ng-container>
+      &nbsp;
+      <button nz-button nzType="default" (click)="trendStatistics()">{{ 'app.ok' | translate }}</button>
+    </div>
+  </div>
+  <nz-row nzGutter="32">
+    <g2-bar height="200" title="{{ 'app.dashboard.statistics-purchase-trend-amount' | translate }}" [data]="trendAmountData">
+    </g2-bar>
+  </nz-row>
+  <nz-row nzGutter="32">
+    <g2-bar height="200" title="{{ 'app.dashboard.statistics-purchase-trend-quantity' | translate }}"
+      color="rgba(67, 205, 128, 0.85)" [data]="trendQuantityData">
+    </g2-bar>
+  </nz-row>
+</nz-card>
+<nz-card nzTitle="{{ 'app.dashboard.general-statistics-analysis' | translate }}"
+  *ngIf="auth['GeneralStatisticsAnalysis']">
+  <div class="content__title">
+    <div class="blank-grow"></div>
+    <div class="data-range">
+      <span>{{ 'app.dashboard.time-range' | translate }}: &nbsp;</span>
+      <nz-range-picker nzShowTime [(ngModel)]="generalDates" [nzFormat]='dateFormat' (nzOnOk)="generalStatistics($event)"></nz-range-picker>
+    </div>
+  </div>
+  <nz-row nzGutter="32">
+      <g2-pie
+      [hasLegend]="true"
+      title="{{ 'app.dashboard.statistics-general-vendor-amount' | translate }}"
+      subTitle="{{ 'app.dashboard.statistics-general-vendor-amount' | translate }}"
+      [total]="generalVendorAmountTotal"
+      [valueFormat]="yuanFormat"
+      [data]="generalVendorAmountData"
+      height="300"></g2-pie>
+  </nz-row>
+  <nz-row nzGutter="32">
+      <g2-pie
+      [hasLegend]="true"
+      title="{{ 'app.dashboard.statistics-general-vendor-quantity' | translate }}"
+      subTitle="{{ 'app.dashboard.statistics-general-vendor-quantity' | translate }}"
+      [total]="generalVendorQuantityTotal"
+      [valueFormat]="defaultFormat"
+      [data]="generalVendorQuantityData"
+      height="300"></g2-pie>
+  </nz-row>
+  <nz-row nzGutter="32">
+      <g2-pie
+      [hasLegend]="true"
+      title="{{ 'app.dashboard.statistics-general-material-amount' | translate }}"
+      subTitle="{{ 'app.dashboard.statistics-general-material-amount' | translate }}"
+      [total]="generalMaterialAmountTotal"
+      [valueFormat]="yuanFormat"
+      [data]="generalMaterialAmountData"
+      height="300"></g2-pie>
+  </nz-row>
+  <nz-row nzGutter="32">
+      <g2-pie
+      [hasLegend]="true"
+      title="{{ 'app.dashboard.statistics-general-material-quantity' | translate }}"
+      subTitle="{{ 'app.dashboard.statistics-general-material-quantity' | translate }}"
+      [total]="generalMaterialQuantityTotal"
+      [valueFormat]="defaultFormat"
+      [data]="generalMaterialQuantityData"
+      height="300"></g2-pie>
+  </nz-row>
+</nz-card>

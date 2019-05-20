@@ -1,0 +1,21 @@
+<nz-card nzTitle="{{ 'menu.system.config.document-management' | translate }}">
+  <form nz-form>
+    <div nz-row>
+      <nz-form-item nz-col [nzSpan]="12">
+        <nz-form-label nz-col [nzSm]="6">{{ 'app.account.document-type' | translate }}</nz-form-label>
+        <nz-form-control nz-col [nzSm]="18">
+          <nz-select style="width:90%;" nzPlaceHolder="{{ 'app.account.document-please-type' | translate }}"
+            nzShowSearch nzAllowClear [(ngModel)]="selectTemplate" name="selectTemplate">
+            <nz-option *ngFor="let template of templates" [nzLabel]="template.name" [nzValue]="template">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <nz-form-item nz-row>
+      <nz-form-control nz-col [nzSm]="18" [nzOffset]="6">
+        <button nz-button [disabled]="!auth.ExportDocument" (click)="export()">{{ 'app.export' | translate }}</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

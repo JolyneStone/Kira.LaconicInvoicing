@@ -1,0 +1,20 @@
+<nz-dropdown nzPlacement="bottomRight">
+  <div class="item d-flex align-items-center px-sm" nz-dropdown>
+    <nz-avatar [nzSrc]="avatar" nzSize="small" class="mr-sm"></nz-avatar>
+    {{settings.user.nickName}}
+  </div>
+  <div nz-menu class="width-sm">
+    <div nz-menu-item (click)="router.navigateByUrl('/profile/account/center')"><i
+        class="anticon anticon-user mr-sm"></i>{{"menu.account.center" | translate }}</div>
+    <!-- <div nz-menu-item (click)="router.navigateByUrl('/profile/account/settings')"><i class="anticon anticon-setting mr-sm"></i>{{ "menu.account.settings" | translate }}</div> -->
+    <div nz-menu-item (click)="osharp.refreshAuthInfo()"><i
+        class="anticon anticon-reload mr-sm"></i>{{ "app.account.flush-privileges" | translate }}</div>
+    <div nz-menu-item *ngIf="!inAdminModule && settings.user.isAdmin" (click)="router.navigateByUrl('/admin')"><i
+        class="anticon anticon-global mr-sm"></i>{{ "menu.account.system" | translate }}</div>
+    <div nz-menu-item *ngIf="inAdminModule" (click)="router.navigateByUrl('/dashboard')"><i
+        class="anticon anticon-home mr-sm"></i>{{ "menu.dashboard.back-home" | translate }}</div>
+    <li nz-menu-divider></li>
+    <div nz-menu-item (click)="logout()"><i
+        class="anticon anticon-logout mr-sm"></i>{{ "menu.account.logout" | translate }}</div>
+  </div>
+</nz-dropdown>

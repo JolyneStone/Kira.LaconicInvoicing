@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using Kira.LaconicInvoicing.Common;
 using Kira.LaconicInvoicing.Security;
+using Kira.LaconicInvoicing.Service.Common;
+using Kira.LaconicInvoicing.Service.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using OSharp.AspNetCore;
@@ -22,7 +24,7 @@ namespace Kira.LaconicInvoicing.Web.Controllers
 {
     [Description("网站-通用")]
     [ModuleInfo(Order = 3)]
-    public class CommonController : ApiController
+    public class CommonController : BaseApiController
     {
         private readonly IVerifyCodeService _verifyCodeService;
 

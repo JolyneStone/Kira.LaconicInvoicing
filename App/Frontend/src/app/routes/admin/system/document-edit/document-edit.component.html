@@ -1,0 +1,51 @@
+<page-header title="{{ 'app.account.document-management' | translate }}"></page-header>
+<form nz-form #f="ngForm" se-container="1" [nzLayout]="'vertical'">
+  <nz-card [nzBordered]="false" [nzTitle]="title">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.account.document-name' | translate }}">
+          <input nz-input #name="ngModel" name="name" required [(ngModel)]="fileTemplateDto.name"
+            placeholder="{{ 'app.account.document-please-name' | translate}}" />
+          <nz-form-explain *ngIf="(name.dirty || name.touched) && name.errors?.required">
+            {{ 'app.account.document-please-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.account.document-type' | translate }}">
+          <nz-select [(ngModel)]="fileTemplateDto.type" name="type" required #type="ngModel"
+            nzPlaceHolder="{{ 'app.account.document-please-type' | translate }}">
+            <nz-option *ngFor="let s of typeKeys" nzLabel="{{ 'app.account.template-' + templateType[s] | translate }}"
+              [nzValue]="s"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="(type.dirty || type.touched) && type.errors?.required">
+            {{ 'app.account.document-please-type' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="&nbsp;">
+          <label for="file" nz-button nzType="primary" class="button_view">
+            {{ 'app.upload' | translate }}
+          </label>
+          <input id="file" type="file" nzType="primary" nz-button nzType="default" #fileInput />
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col [nzXl]="{span:24, offset:0}" [nzLg]="{span:24}" [nzMd]="{span:24}" nzSm="24">
+        <se label="{{ 'app.account.document-comment' | translate }}">
+          <textarea nz-input [(ngModel)]="fileTemplateDto.comment" name="comment"
+            [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+            placeholder="{{ 'app.account.document-please-comment' | translate }}"></textarea>
+        </se>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <button nz-button type="primary" nzType="primary" [disabled]="!auth[mode] || !f.valid"
+      (click)="submit()">
+      {{ 'app.submit' | translate }}
+    </button>
+  </footer-toolbar>
+</form>

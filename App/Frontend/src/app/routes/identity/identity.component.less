@@ -1,0 +1,94 @@
+@import '../../../../node_modules/@delon/theme/styles/default.less';
+
+:host {
+  ::ng-deep {
+    .container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      background: #f0f2f5;
+    }
+
+    .wrap {
+      padding: 32px 0;
+      flex: 1;
+    }
+
+    .ant-form-item {
+      margin-bottom: 24px;
+    }
+
+    .identity-box {
+      display: block;
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: @screen-md-min) {
+      .container {
+        background-image: url('/assets/identity-bg.svg');
+        background-repeat: no-repeat;
+        background-position: center 110px;
+        background-size: 100%;
+      }
+
+      .background-jojo {
+        background: url('/assets/jojo.jpg') no-repeat center;
+        background-size: cover;
+        opacity: 0.9;
+        filter: alpha(opacity=90);
+        -moz-opacity: 0.9;
+        -khtml-opacity: 0.9;
+        //position: relative;
+        //z-index: -1;/*-1 可以当背景*/
+        // -webkit-filter: blur(3px);
+        // filter: blur(3px);
+      }
+
+      .wrap {
+        padding: 112px 0 24px;
+        //padding: 20px 0 24px;
+      }
+    }
+
+    .top {
+      text-align: center;
+    }
+
+    .header {
+      height: 44px;
+      line-height: 44px;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .logo {
+      height: 44px;
+      margin-right: 16px;
+    }
+
+    .title {
+      font-size: 33px;
+      color: @heading-color;
+      font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      font-weight: 600;
+      position: relative;
+      vertical-align: middle;
+    }
+
+    .desc {
+      font-size: @font-size-base;
+      color: @text-color-secondary;
+      margin-top: 12px;
+      margin-bottom: 40px;
+    }
+
+    .background-jojo {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+  }
+}

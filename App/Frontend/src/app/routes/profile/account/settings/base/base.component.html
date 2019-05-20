@@ -1,0 +1,63 @@
+<nz-spin [nzSpinning]="userLoading">
+  <div class="main" *ngIf="userDetail">
+    <div class="left">
+      <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
+        <se label="{{ 'app.account.nickname' | translate }}" error="{{ 'app.account.settings.please-nick-name' | translate }}">
+          <input nz-input [(ngModel)]="userDetail.nickName" name="name" required>
+        </se>
+        <se label="{{ 'app.account.department' | translate }}" error="{{ 'app.account.settings.please-department' | translate }}">
+          <input nz-input [(ngModel)]="userDetail.department" name="department" required>
+        </se>
+        <se label="{{ 'app.account.profile' | translate }}">
+          <textarea nz-input [(ngModel)]="userDetail.personalProfile" name="profile" [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+                    placeholder="{{ 'app.account.profile' | translate }}"></textarea>
+        </se>
+        <se label="{{ 'app.account.country' | translate }}">
+          <nz-select [(ngModel)]="userDetail.country" name="country">
+            <nz-option nzLabel="中国" nzValue="China"></nz-option>
+          </nz-select>
+        </se>
+        <se label="{{ 'app.account.province' | translate }}">
+          <div class="d-flex justify-content-between">
+            <nz-select [(ngModel)]="userDetail.province" (ngModelChange)="choProvince($event)"
+                       name="geographic.province.key" class="width-50 mr-sm">
+              <nz-option *ngFor="let p of provinces" [nzLabel]="p.name" [nzValue]="p.id"></nz-option>
+            </nz-select>
+            <nz-select [(ngModel)]="userDetail.city" name="geographic.city.key"
+                       class="width-50">
+              <nz-option *ngFor="let p of cities" [nzLabel]="p.name" [nzValue]="p.id"></nz-option>
+            </nz-select>
+          </div>
+        </se>
+        <se label="{{ 'app.account.address' | translate }}" error="{{ 'app.account.settings.please-address' | translate }}">
+          <input nz-input [(ngModel)]="userDetail.address" name="address">
+        </se>
+        <se label="{{ 'app.account.telephone' | translate }}" error="{{ 'app.account.settings.please-telephone' | translate }}">
+          <input nz-input [(ngModel)]="userDetail.telephone" name="phone">
+        </se>
+        <se>
+          <button nz-button nzType="primary" type="submit" [disabled]="f.invalid">{{ 'app.account.settings.save' | translate }}</button>
+        </se>
+      </form>
+    </div>
+    <div class="right">
+      <!-- <div class="avatar_title">Avatar</div> -->
+      <div class="avatar">
+        <img [src]="avatarUrl" alt="Avatar">
+      </div>
+      <!-- <nz-upload
+        nzAction="api/usercenter/profile/ChangeAvatar" 
+        [nzCustomRequest]="changeAvatar"
+        >
+        <button nz-button class="button_view">
+          <i nz-icon type="upload"></i>
+          <span>{{ 'app.account.settings.change-avatar' | translate }}</span>
+        </button>
+      </nz-upload> -->
+        <label for="file" nz-button class="button_view">          
+          {{ 'app.account.settings.change-avatar' | translate }}
+        </label>
+        <input id="file" type="file" nz-button nzType="default" (change)="onChangeSelectFile($event)" #fileInput value="切换头像" />
+    </div>
+  </div>
+</nz-spin>

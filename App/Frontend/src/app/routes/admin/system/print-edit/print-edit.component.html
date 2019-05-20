@@ -1,0 +1,89 @@
+<page-header title="{{ 'app.account.print-management' | translate }}"></page-header>
+<form nz-form #f="ngForm" se-container="1" [nzLayout]="'vertical'">
+  <nz-card [nzBordered]="false" [nzTitle]="title">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.account.print-name' | translate }}">
+          <input nz-input #name="ngModel" name="name" required [(ngModel)]="printTemplateDto.name"
+            placeholder="{{ 'app.account.print-please-name' | translate}}" />
+          <nz-form-explain *ngIf="(name.dirty || name.touched) && name.errors?.required">
+            {{ 'app.account.print-please-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.account.print-type' | translate }}">
+          <nz-select [(ngModel)]="printTemplateDto.type" name="type" required #type="ngModel"
+            nzPlaceHolder="{{ 'app.account.print-please-type' | translate }}">
+            <nz-option *ngFor="let s of typeKeys" nzLabel="{{ 'app.account.template-' + templateType[s] | translate }}"
+              [nzValue]="s"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="(type.dirty || type.touched) && type.errors?.required">
+            {{ 'app.account.print-please-type' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="&nbsp;">
+          <button nz-button nzType="primary" (click)="clickEdit()">{{ 'app.edit' | translate }}</button>
+          <label for="file" nz-button nzType="primary" class="button_view">
+            {{ 'app.upload' | translate }}
+          </label>
+          <input id="file" type="file" nzType="primary" nz-button nzType="default" #fileInput />
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col [nzXl]="{span:24, offset:0}" [nzLg]="{span:24}" [nzMd]="{span:24}" nzSm="24">
+        <se label="{{ 'app.account.print-comment' | translate }}">
+          <textarea nz-input [(ngModel)]="printTemplateDto.comment" name="comment"
+            [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+            placeholder="{{ 'app.account.print-please-comment' | translate }}"></textarea>
+        </se>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="false" *ngIf="!hasUpload">
+    <nz-row nzGutter="16">
+      <nz-col [nzXl]="{span:24, offset:0}" [nzLg]="{span:24}" [nzMd]="{span:24}" nzSm="24">
+        <se label="{{ 'app.account.print-server' | translate }}">
+          <div nz-col [nzSpan]="8">
+            <input nz-input nzPlaceHolder="https://localhost:8443/CLodopfuncs.js" [(ngModel)]="cog.url" name="url">
+          </div>
+          <div nz-col [nzSpan]="16">
+            <button nz-button (click)="reload(null)">{{ 'app.account.print-server-reload' | translate }}</button>
+          </div>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16" style="margin-top: 10px;">
+      <nz-col [nzXl]="{span:24, offset:0}" [nzLg]="{span:24}" [nzMd]="{span:24}" nzSm="24">
+        <se>
+        <div nz-col [nzSpan]="8">
+          <nz-select [(ngModel)]="currentPage" name="currentPage">
+            <nz-option *ngFor="let s of scripts; let i = index" [nzLabel]="i+1" [nzValue]="i"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col [nzSpan]="16">
+          <nz-button-group>
+            <button nz-button nzType="default" [disabled]="isDisabled"
+              (click)="editScript()">{{ 'app.edit' | translate }}</button>
+            <button nz-button nzType="default" [disabled]="isDisabled"
+              (click)="addScript()">{{ 'app.add' | translate }}</button>
+            <button nz-button nzType="default" [disabled]="isDisabled"
+              (click)="insertScript()">{{ 'app.insert' | translate }}</button>
+            <button nz-button nzType="default" [disabled]="isDisabled"
+              (click)="deleteScript()">{{ 'app.delete' | translate }}</button>
+          </nz-button-group>
+        </div>
+        </se>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <button nz-button type="primary" nzType="primary" [disabled]="!auth[mode] || !f.valid || isDisabled"
+      (click)="submit()">
+      {{ 'app.submit' | translate }}
+    </button>
+  </footer-toolbar>
+</form>

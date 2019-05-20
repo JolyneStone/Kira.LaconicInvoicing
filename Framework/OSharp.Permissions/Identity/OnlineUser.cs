@@ -1,14 +1,4 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="OnlineUser.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-07-09 11:38</last-date>
-// -----------------------------------------------------------------------
-
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 
 namespace OSharp.Identity
 {
@@ -55,6 +45,11 @@ namespace OSharp.Identity
         /// 获取或设置 是否管理
         /// </summary>
         public bool IsAdmin { get; set; }
+
+        /// <summary>
+        /// 获取或设置 联系电话
+        /// </summary>
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// 获取或设置 用户角色

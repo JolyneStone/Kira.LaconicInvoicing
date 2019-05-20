@@ -1,0 +1,15 @@
+{
+  "app": {
+    "name": "Kira.LaconicInvoicing",
+    "description": "本系统适用于中小型企业进销存管理",
+    "logo": "./assets/logo.svg",
+    "logo_full": "./assets/logo-full.svg",
+    "logo_color": "./assets/logo-color.svg",
+    "siteMenus": [
+      {
+        "link": "Dashboard",
+        "label": "首页"
+      }
+    ]
+  }
+}

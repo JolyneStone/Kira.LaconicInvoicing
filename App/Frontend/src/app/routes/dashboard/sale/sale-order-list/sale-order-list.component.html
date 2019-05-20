@@ -1,0 +1,101 @@
+<page-header title="{{ 'app.dashboard.saleorder-management' | translate }}"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="search()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="number">{{ 'app.dashboard.saleorder-number' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="queryData.number" name="number"
+              placeholder="{{ 'app.please-enter' | translate }}" id="number">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="customerName">{{ 'app.dashboard.saleorder-customer-name' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-form-control>
+              <input nz-input [(ngModel)]="queryData.customerName" name="customerName"
+                placeholder="{{ 'app.please-enter' | translate }}" id="customerName">
+            </nz-form-control>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="customerNumber">{{ 'app.dashboard.saleorder-customer-number' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="queryData.customerNumber" name="customerNumber"
+              placeholder="{{ 'app.please-enter' | translate }}" id="customerNumber">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="rangeDate">{{ 'app.dashboard.range-datetime' | translate }}</nz-form-label>&nbsp;&nbsp;&nbsp;
+          <nz-form-control>
+            <nz-range-picker name="rangeDate" [(ngModel)]="queryData.rangeDate" nzFormat="yyyy-MM-dd">
+            </nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="expandForm ? 24 : 8" [class.text-right]="expandForm">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading"
+          [disabled]="!auth.Search">{{ 'app.search' | translate }}</button>
+        <button nz-button type="reset" (click)="reset()" class="mx-sm">{{ 'app.reset' | translate }}</button>
+        <a (click)="expandForm=!expandForm">
+          {{expandForm ? ('app.pack-up' | translate) : ('app.expand' | translate)}}
+          <i class="anticon" [class.anticon-down]="!expandForm" [class.anticon-up]="expandForm"></i>
+        </a>
+      </div>
+    </div>
+  </form>
+  <button nz-button [nzType]="'primary'" (click)="add()" [disabled]="!auth.Add">
+    <i nz-icon type="plus"></i>
+    <span>{{ 'app.add' | translate }}</span>
+  </button>
+  <button nz-button [nzType]="'danger'" (click)="delete()"
+    [disabled]="!auth.Delete">{{ 'app.delete' | translate }}</button>
+  <button nz-button [nzType]="'default'" (click)="refresh()" [disabled]="!auth.Search">
+    <i nz-icon type="redo"></i>
+    <span>{{ 'app.refresh' | translate }}</span>
+  </button>
+  <nz-table #rowSelectionTable nzShowSizeChanger [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="total"
+    [nzData]="saleOrderDtoList" (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    (nzPageIndexChange)="pageIndexChange()">
+    <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"></th>
+        <th nzShowSort [nzSort]="sorts[0].order" (nzSortChange)="sort('Number', $event)">
+          {{ 'app.dashboard.saleorder-number' | translate }}</th>
+        <th nzShowSort [nzSort]="sorts[1].order" (nzSortChange)="sort('CustomerName', $event)">
+          {{ 'app.dashboard.saleorder-customer-name' | translate }}</th>
+        <th nzShowSort [nzSort]="sorts[2].order" (nzSortChange)="sort('CustomerNumber', $event)">
+          {{ 'app.dashboard.saleorder-customer-name' | translate }}
+        </th>
+        <th nzShowSort [nzSort]="sorts[3].order" (nzSortChange)="sort('TotalAmount', $event)">
+            {{ 'app.dashboard.saleorder-total-amount' | translate }}
+          </th>
+        <th nzShowSort [nzSort]="sorts[4].order" (nzSortChange)="sort('Datetime', $event)">
+          {{ 'app.update-datetime' | translate }}
+        </th>
+        <th>{{ 'app.operator' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.number }}</td>
+        <td>{{ data.customerName }}</td>
+        <td>{{ data.customerNumber }}</td>
+        <td>{{ data.totalAmount }}</td>
+        <td>{{ data.dateTime | date }}</td>
+        <td>
+          <a href="javascript:" (click)="edit(data)">{{ 'app.detail' | translate }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

@@ -1,20 +1,11 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="SecurityController.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-27 4:50</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
 using Kira.LaconicInvoicing.Security;
 using Kira.LaconicInvoicing.Security.Entities;
-
+using Kira.LaconicInvoicing.Service.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,7 +21,7 @@ namespace Kira.LaconicInvoicing.Web.Controllers
 {
     [Description("网站-授权")]
     [ModuleInfo(Order = 2)]
-    public class SecurityController : ApiController
+    public class SecurityController : BaseApiController
     {
         private readonly SecurityManager _securityManager;
         private readonly ILogger<SecurityController> _logger;
@@ -49,7 +40,6 @@ namespace Kira.LaconicInvoicing.Web.Controllers
         /// <param name="url">要检查的URL</param>
         /// <returns>是否有权</returns>
         [HttpGet]
-        [ModuleInfo]
         [Description("检查URL授权")]
         public bool CheckUrlAuth(string url)
         {
@@ -62,7 +52,6 @@ namespace Kira.LaconicInvoicing.Web.Controllers
         /// </summary>
         /// <returns>权限节点</returns>
         [HttpGet]
-        [ModuleInfo]
         [Description("获取授权信息")]
         public List<string> GetAuthInfo()
         {

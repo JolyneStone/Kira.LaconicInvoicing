@@ -1,16 +1,7 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="User.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-27 4:44</last-date>
-// -----------------------------------------------------------------------
-
-using OSharp.Identity;
+﻿using OSharp.Identity;
 using System.Collections.Generic;
 using System.ComponentModel;
-
+using Newtonsoft.Json;
 
 namespace Kira.LaconicInvoicing.Identity.Entities
 {
@@ -29,26 +20,31 @@ namespace Kira.LaconicInvoicing.Identity.Entities
         /// <summary>
         /// 获取或设置 用户详细信息
         /// </summary>
+        [JsonIgnore]
         public virtual UserDetail UserDetail { get; set; }
 
         /// <summary>
         /// 获取或设置 分配的用户角色信息集合
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
         /// <summary>
         /// 获取或设置 用户的声明信息集合
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<UserClaim> UserClaims { get; set; } = new List<UserClaim>();
 
         /// <summary>
         /// 获取或设置 用户的第三方登录信息集合
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<UserLogin> UserLogins { get; set; } = new List<UserLogin>();
 
         /// <summary>
         /// 获取或设置 用户令牌信息集合
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<UserToken> UserTokens { get; set; } = new List<UserToken>();
     }
 }

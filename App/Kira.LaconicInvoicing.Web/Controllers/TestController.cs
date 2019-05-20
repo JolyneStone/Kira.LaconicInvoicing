@@ -1,13 +1,4 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="TestController.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-27 4:50</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,7 +7,7 @@ using System.Threading.Tasks;
 using Kira.LaconicInvoicing.Identity;
 using Kira.LaconicInvoicing.Identity.Dtos;
 using Kira.LaconicInvoicing.Identity.Entities;
-
+using Kira.LaconicInvoicing.Service.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -39,7 +30,7 @@ namespace Kira.LaconicInvoicing.Web.Controllers
 {
     [Description("网站-测试")]
     [ClassFilter]
-    public class TestController : ApiController
+    public class TestController : BaseApiController
     {
         private readonly UserManager<User> _userManager;
         private readonly IIdentityContract _identityContract;
@@ -50,55 +41,57 @@ namespace Kira.LaconicInvoicing.Web.Controllers
             _identityContract = identityContract;
         }
 
-        [HttpGet]
-        [ServiceFilter(typeof(UnitOfWorkAttribute))]
-        [MethodFilter]
-        [Description("测试01")]
-        public async Task<string> Test01()
-        {
-            List<object> list = new List<object>();
+        //[HttpGet]
+        //[ServiceFilter(typeof(UnitOfWorkAttribute))]
+        //[MethodFilter]
+        //[Description("测试01")]
+        //public async Task<string> Test01()
+        //{
+        //    List<object> list = new List<object>();
 
-            if (!_userManager.Users.Any())
-            {
-                RegisterDto dto = new RegisterDto
-                {
-                    UserName = "admin",
-                    Password = "gmf31529019",
-                    ConfirmPassword = "gmf31529019",
-                    Email = "i66soft@qq.com",
-                    NickName = "大站长",
-                    RegisterIp = HttpContext.GetClientIp()
-                };
+        //    if (!_userManager.Users.Any())
+        //    {
+        //        RegisterDto dto = new RegisterDto
+        //        {
+        //            UserName = "admin",
+        //            Password = "gmf31529019",
+        //            ConfirmPassword = "gmf31529019",
+        //            Email = "i66soft@qq.com",
+        //            NickName = "大站长",
+        //            RegisterIp = HttpContext.GetClientIp()
+        //        };
 
-                OperationResult<User> result = await _identityContract.Register(dto);
-                if (result.Successed)
-                {
-                    User user = result.Data;
-                    user.EmailConfirmed = true;
-                    await _userManager.UpdateAsync(user);
-                }
-                list.Add(result.Message);
+        //        OperationResult<User> result = await _identityContract.Register(dto, ServiceProvider);
+        //        if (result.Successed)
+        //        {
+        //            User user = result.Data;
+        //            user.EmailConfirmed = true;
+        //            await _userManager.UpdateAsync(user);
+        //        }
+        //        list.Add(result.Message);
 
-                dto = new RegisterDto()
-                {
-                    UserName ="mf.guo",
-                    Password = "gmf31529019",
-                    Email = "mf.guo@qq.com",
-                    NickName = "柳柳英侠",
-                    RegisterIp = HttpContext.GetClientIp()
-                };
-                result = await _identityContract.Register(dto);
-                if (result.Successed)
-                {
-                    User user = result.Data;
-                    user.EmailConfirmed = true;
-                    await _userManager.UpdateAsync(user);
-                }
-                list.Add(result.Message);
-            }
+        //        dto = new RegisterDto()
+        //        {
+        //            UserName ="mf.guo",
+        //            Password = "gmf31529019",
+        //            Email = "mf.guo@qq.com",
+        //            NickName = "柳柳英侠",
+        //            RegisterIp = HttpContext.GetClientIp()
+        //        };
+        //        result = await _identityContract.Register(dto, ServiceProvider);
+        //        if (result.Successed)
+        //        {
+        //            User user = result.Data;
+        //            user.EmailConfirmed = true;
+        //            await _userManager.UpdateAsync(user);
+        //        }
+        //        list.Add(result.Message);
+        //    }
 
-            return list.ExpandAndToString("\r\n");
-        }
+        //    return list.ExpandAndToString("\r\n");
+        //}
+
+
 
     }
 

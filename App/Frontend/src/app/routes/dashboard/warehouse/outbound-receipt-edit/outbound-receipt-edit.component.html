@@ -1,0 +1,245 @@
+<page-header title="{{ 'app.dashboard.outboundreceipt-management' | translate }}"></page-header>
+<form nz-form #f="ngForm" se-container="1" [nzLayout]="'vertical'">
+  <nz-card [nzBordered]="false" nzTitle="{{ 'app.dashboard.outboundreceipt-base-info' | translate }}">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterNumberTemplate">
+            <input nz-input #number="ngModel" name="number" required [(ngModel)]="outboundReceiptDto.number"
+              placeholder="{{ 'app.dashboard.outboundreceipt-please-number' | translate}}" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="(number.dirty || number.touched) && number.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-number' | translate }}
+          </nz-form-explain>
+          <ng-template #addOnAfterNumberTemplate>
+            <button nz-button nzType="primary" (click)="getNewNumber()" [disabled]="!auth.GetNewNumber && mode!=='Add'"
+              nzSize="small" nzGhost>{{ 'app.get' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-receiver' | translate }}">
+          <input nz-input [(ngModel)]="outboundReceiptDto.receiver" name="receiver" required #receiver="ngModel"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-receiver' | translate }}">
+          <nz-form-explain *ngIf="(receiver.dirty || receiver.touched) && receiver.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-receiver' | translate }}</nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-receiver-no' | translate }}">
+          <input nz-input required #receiverNo="ngModel" name="receiverNo" [(ngModel)]="outboundReceiptDto.receiverNo"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-receiver-no' | translate}}" />
+          <nz-form-explain *ngIf="(receiverNo.dirty || receiverNo.touched) && receiverNo.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-receiver-no' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-receiver-address' | translate }}">
+          <input nz-input required #receiverAddress="ngModel" name="receiverAddress"
+            [(ngModel)]="outboundReceiptDto.receiverAddress"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-receiver-address' | translate}}" />
+          <nz-form-explain
+            *ngIf="(receiverAddress.dirty || receiverAddress.touched) && receiverAddress.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-receiver-address' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-warehouse-number' | translate }}">
+          <nz-input-group [nzAddOnAfter]="addOnAfterWarehouseNumberTemplate">
+            <input nz-input required #warehouseNumber="ngModel" name="warehouseNumber"
+              [(ngModel)]="outboundReceiptDto.warehouseNumber"
+              placeholder="{{ 'app.dashboard.outboundreceipt-please-warehouse-number' | translate}}" />
+          </nz-input-group>
+          <nz-form-explain
+            *ngIf="(warehouseNumber.dirty || warehouseNumber.touched) && warehouseNumber.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-warehouse-number' | translate }}
+          </nz-form-explain>
+          <ng-template #addOnAfterWarehouseNumberTemplate>
+            <button nz-button nzType="primary" (click)="selectWarehouse()" [disabled]="mode!=='Add'" nzSize="small"
+              nzGhost>{{ 'app.select' | translate }}</button>
+          </ng-template>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-warehouse-name' | translate }}">
+          <input nz-input required #warehouseName="ngModel" name="warehouse-name"
+            [(ngModel)]="outboundReceiptDto.warehouseName"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-warehouse-name' | translate}}" />
+          <nz-form-explain *ngIf="(warehouseName.dirty || warehouseName.touched) && warehouseName.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-warehouse-name' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-delivery-man' | translate }}">
+          <input nz-input required #deliveryMan="ngModel" name="deliveryMan"
+            [(ngModel)]="outboundReceiptDto.deliveryMan"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-delivery-man' | translate}}" />
+          <nz-form-explain *ngIf="(deliveryMan.dirty || deliveryMan.touched) && deliveryMan.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-delivery-man' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-delivery-man-contact' | translate }}">
+          <input nz-input #deliveryManContact="ngModel" name="deliveryManContact"
+            [(ngModel)]="outboundReceiptDto.deliveryManContact"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-delivery-man-contact' | translate}}" />
+          <nz-form-explain
+            *ngIf="(deliveryManContact.dirty || deliveryManContact.touched) && deliveryManContact.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-delivery-man-contact' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-waybill-no' | translate }}">
+          <input nz-input #waybillNo="ngModel" name="waybillNo" [(ngModel)]="outboundReceiptDto.waybillNo"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-waybill-no' | translate}}" />
+          <nz-form-explain *ngIf="(waybillNo.dirty || waybillNo.touched) && waybillNo.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-waybill-no' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-consignor' | translate }}">
+          <input nz-input required #consignor="ngModel" name="consignor" [(ngModel)]="outboundReceiptDto.consignor"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-consignor' | translate}}" />
+          <nz-form-explain *ngIf="(consignor.dirty || consignor.touched) && consignor.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-consignor' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-consignor-contact' | translate }}">
+          <input nz-input #consignorContact="ngModel" name="consignorContact"
+            [(ngModel)]="outboundReceiptDto.consignorContact"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-consignor-contact' | translate}}" />
+          <nz-form-explain
+            *ngIf="(consignorContact.dirty || consignorContact.touched) && consignorContact.errors?.required">
+            {{ 'app.dashboard.outboundreceipt-please-consignor-contact' | translate }}
+          </nz-form-explain>
+        </se>
+      </nz-col>
+      <nz-col [nzXl]="{span:6, offset:2}" [nzLg]="{span:8}" [nzMd]="{span:12}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-operator' | translate }}">
+          <input nz-input name="operator" [ngModel]="outboundReceiptDto.operator" />
+        </se>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col [nzXl]="{span:24, offset:0}" [nzLg]="{span:24}" [nzMd]="{span:24}" nzSm="24">
+        <se label="{{ 'app.dashboard.outboundreceipt-comment' | translate }}">
+          <textarea nz-input [(ngModel)]="outboundReceiptDto.comment" name="comment"
+            [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+            placeholder="{{ 'app.dashboard.outboundreceipt-please-comment' | translate }}"></textarea>
+        </se>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="false" nzTitle="{{ 'app.dashboard.outboundreceipt-item-info' | translate }}">
+    <nz-table [nzData]="outboundReceiptDto.items" [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th>{{ 'app.dashboard.outboundreceipt-item-number' | translate }}</th>
+          <th>{{ 'app.dashboard.outboundreceipt-item-name'| translate }}</th>
+          <th>{{ 'app.dashboard.outboundreceipt-item-spec'| translate }}</th>
+          <th>{{ 'app.dashboard.outboundreceipt-item-amount' | translate }}</th>
+          <th *ngIf="mode==='Add'">{{ 'app.operator' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of outboundReceiptDto.items; let i = index">
+          <td>
+            <span *ngIf="editIndex!==i">{{item.number}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <nz-input-group [nzAddOnBefore]="addOnBeforeMaterialNumberTemplate"
+                [nzAddOnAfter]="addOnAfterProductNumberTemplate">
+                <input nz-input #itemNumber="ngModel" [ngModel]="editObj.number" name="itemNumber" readonly="readonly"
+                  reqiure placeholder="{{'app.dashboard.outboundreceipt-item-please-number' | translate }}" />
+              </nz-input-group>
+              <nz-form-explain *ngIf="(itemNumber.dirty || itemNumber.touched) && itemNumber.errors?.required">
+                {{ 'app.dashboard.outboundreceipt-item-please-number' | translate }}
+              </nz-form-explain>
+              <ng-template #addOnBeforeMaterialNumberTemplate>
+                <button nz-button nzType="primary" (click)="selectMaterialItem(i)" [disabled]="mode!=='Add'"
+                  nzSize="small" nzGhost>{{ 'app.dashboard.simplify-material' | translate }}</button>
+              </ng-template>
+              <ng-template #addOnAfterProductNumberTemplate>
+                <button nz-button nzType="primary" (click)="selectProductItem(i)" [disabled]="mode!=='Add'"
+                  nzSize="small" nzGhost>{{ 'app.dashboard.simplify-product' | translate }}</button>
+              </ng-template>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.name}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemName="ngModel" [ngModel]="editObj.name" readonly="readonly" name="itemName" reqiure
+                placeholder="{{'app.dashboard.outboundreceipt-item-please-name' | translate }}">
+              <nz-form-explain *ngIf="(itemName.dirty || itemName.touched) && itemName.errors?.required">
+                {{ 'app.dashboard.outboundreceipt-item-please-name' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.spec}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemSpec="ngModel" [ngModel]="editObj.spec" name="itemSpec" readonly="readonly" require
+                placeholder="{{'app.dashboard.outboundreceipt-item-please-spec' | translate }}">
+              <nz-form-explain *ngIf="(itemSpec.dirty || itemSpec.touched) && itemSpec.errors?.required">
+                {{ 'app.dashboard.outboundreceipt-item-please-goods-category' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex!==i">{{item.amount}}</span>
+            <span *ngIf="editIndex===i" nz-form-control>
+              <input nz-input #itemAmount="ngModel" [(ngModel)]="editObj.amount" name="itemAmount" require
+                placeholder="{{'app.dashboard.outboundreceipt-item-please-amount' | translate }}">
+              <nz-form-explain *ngIf="(itemAmount.dirty || itemAmount.touched) && itemAmount.errors?.required">
+                {{ 'app.dashboard.outboundreceipt-item-please-amount' | translate }}
+              </nz-form-explain>
+            </span>
+          </td>
+          <td *ngIf="mode==='Add'">
+            <span *ngIf="editIndex!==i">
+              <a (click)="editItem(i)">{{ 'app.edit' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <nz-popconfirm (nzOnConfirm)="delItem(i)" nzTitle="{{ 'app.confirm-delete' | translate }}">
+                <a nz-popconfirm>{{ 'app.delete' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+            <span *ngIf="editIndex===i">
+              <a (click)="saveItem(i)">{{ 'app.save' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <nz-popconfirm (nzOnConfirm)="cancelItem(i)" nzTitle="{{ 'app.confirm-cancel' | translate }}">
+                <a nz-popconfirm>{{ 'app.cancel' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <button *ngIf="editIndex===-1 && mode==='Add'" nz-button [nzType]="'dashed'" (click)="addItem()" nzBlock
+      class="mt-md">
+      <i nz-icon type="plus"></i>
+      <span>{{ 'app.dashboard.add-outboundreceipt-item' | translate }}</span>
+    </button>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <button nz-button nzType="default" [hidden]="mode=='Add' || !auth[mode]"
+      (click)="startPrint()">{{ 'app.print' | translate }}</button>
+    <button nz-button nzType="default" [hidden]="mode=='Add' || !auth[mode]"
+      (click)="startExport()">{{ 'app.export' | translate }}</button>
+    <button nz-button type="primary" nzType="primary"
+      [disabled]="!auth[mode] && !f.valid && outboundReceiptDto.items.length<=0"
+      (click)="submit()">{{ 'app.submit' | translate }}</button>
+  </footer-toolbar>
+</form>

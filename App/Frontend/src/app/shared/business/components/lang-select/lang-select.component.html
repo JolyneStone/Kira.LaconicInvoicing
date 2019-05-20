@@ -1,0 +1,11 @@
+<nz-dropdown [nzPlacement]="'bottomLeft'">
+  <button nz-button nz-dropdown>{{ 'menu.lang' | translate }}</button>
+  <ul nz-menu>
+    <li nz-menu-item>
+      <a href="javascript" (click)="selectLanguage('zh-CN')">中文简体</a>
+    </li>
+    <li nz-menu-item>
+      <a href="javascript:" (click)="selectLanguage('en-US')">English</a>
+    </li>
+  </ul>
+</nz-dropdown>

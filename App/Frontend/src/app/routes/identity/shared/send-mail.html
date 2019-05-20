@@ -1,0 +1,44 @@
+<div *ngIf="!result.show" class="identity-box">
+  <h3 class="text-center" style="font-size: 20px; margin-bottom: 20px;">{{title}}</h3>
+  <form nz-form (ngSubmit)="submitForm()" role="form" #form="ngForm">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-mail">
+          <input nz-input type="email" [(ngModel)]="dto.email" name="email" placeholder="{{'app.account.mail' | translate}}" required email [remoteInverse]="'api/identity/CheckEmailExists?email=:value'"
+            #email="ngModel">
+        </nz-input-group>
+        <nz-form-explain *ngIf="(email.dirty || email.touched) && email.errors?.required">{{ "app.account.security.please-mail" | translate }}</nz-form-explain>
+        <nz-form-explain *ngIf="(email.dirty || email.touched) && email.errors?.email">{{ "app.account.security.email-error" | translate }}</nz-form-explain>
+        <nz-form-explain *ngIf="(email.dirty || email.touched) && email.errors?.remoteInverse">{{ "app.account.security.email-remote-inverse" | translate }}</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzSize="large" [nzSuffix]="suffixButton">
+          <input [(ngModel)]="code.code" name="verifyCode" type="text" nz-input placeholder="{{ 'app.account.security.verifycode' | translate }}" required minlength="4" [remoteInverse]="'api/common/CheckVerifyCode?code=:value&verifycodeid='+code.id"
+            #verifyCode="ngModel">
+        </nz-input-group>
+        <ng-template #suffixButton>
+          <div style="text-align:right; cursor: pointer;">
+            <img (click)="refreshVerifyCode()" src="{{code.image}}" />
+          </div>
+        </ng-template>
+        <nz-form-explain *ngIf="(verifyCode.dirty || verifyCode.touched) && (verifyCode.errors?.required || verifyCode.errors?.minlength)">{{ "app.account.security.please-verifycode" | translate }}</nz-form-explain>
+        <nz-form-explain *ngIf="(verifyCode.dirty || verifyCode.touched) && verifyCode.errors?.remoteInverse">{{ "app.account.security.verifycode-remote-inverse" | translate }}</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-row>
+        <nz-col nzOffset="16">
+          <button nz-button nzSize="large" nzType="primary" type="submit" [disabled]="!(form.form.valid && canSubmit && canSend)">{{ "app.enter-next" | translate }}</button>
+          <a style="line-height: 45px;margin-left: 10px;" href="javascript:history.back()">{{ "app.back" | translate }}</a>
+        </nz-col>
+      </nz-row>
+    </nz-form-item>
+  </form>
+</div>
+<result *ngIf="result.show" type="{{result.type}}" [title]="result.title" description="{{result.description}}">
+  <button nz-button [nzType]="'primary'" (click)="result.show=false;dto.verifyCode=null;">{{ "app.back" | translate }}</button>
+  <button *ngIf="result.type=='success'" nz-button (click)="osharp.openMailSite(dto.email)">{{ "app.account.security.enter-email" | translate }}</button>
+  <button nz-button (click)="router.navigate(['dashboard'])">{{ "app.back-home" | translate }}</button>
+</result>

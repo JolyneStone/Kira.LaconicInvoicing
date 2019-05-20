@@ -4,8 +4,8 @@
     <id>OSharpNS</id>
     <version>0.4.0-beta07</version>
     <title>OSharpFramework(.NetStandard2.0)</title>
-    <authors>柳柳软件(66soft.net)</authors>
-    <owners>柳柳软件(66soft.net)</owners>
+    <authors>Kira Yoshikage(66soft.net)</authors>
+    <owners>Kira Yoshikage(66soft.net)</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://choosealicense.com/licenses/apache-2.0/</licenseUrl>
     <projectUrl>https://github.com/i66soft/osharp-ns20</projectUrl>

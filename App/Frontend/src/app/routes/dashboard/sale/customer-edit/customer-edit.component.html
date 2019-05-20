@@ -1,0 +1,109 @@
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzTitle]="modalTitle"
+  [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="cancel()">
+  <ng-template #modalTitle>
+    {{ title }}
+  </ng-template>
+  <ng-template #modalContent>
+    <nz-tabset>
+      <nz-tab nzTitle="{{ 'app.base-info' | translate }}">
+              <form nz-form #f="ngForm" se-container="1">
+                  <nz-row nzGutter="16">
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-name' | translate }}">
+                        <input nz-input [(ngModel)]="customerDto.name" name="name" required #name="ngModel">
+                        <nz-form-explain *ngIf="(name.dirty || name.touched) && name.errors?.required">
+                          {{ 'app.dashboard.customer-please-name' | translate }}</nz-form-explain>
+                      </se>
+                    </nz-col>
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-number' | translate }}">
+                        <nz-input-group [nzAddOnAfter]="addOnAfterTemplate">
+                          <input type="text" nz-input [(ngModel)]="customerDto.number" name="number" width="200px" required
+                            #number="ngModel" />
+                        </nz-input-group>
+                        <nz-form-explain *ngIf="(number.dirty || number.touched) && number.errors?.required">
+                          {{ 'app.dashboard.customer-please-number' | translate }}</nz-form-explain>
+                        <ng-template #addOnAfterTemplate>
+                          <button nz-button nzType="primary" (click)="getNewNumber()"
+                            [disabled]="!auth.GetNewNumber && mode!=='Add'" nzSize="small"
+                            nzGhost>{{ 'app.get' | translate }}</button>
+                        </ng-template>
+                      </se>
+                    </nz-col>
+                  </nz-row>
+                  <nz-row nzGutter="16">
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-type' | translate }}">
+                        <nz-select [(ngModel)]="customerDto.type" name="type" required #type="ngModel"
+                          nzPlaceHolder="{{ 'app.dashboard.customer-please-type' | translate }}">
+                          <nz-option *ngFor="let type of types; let idx = index" [nzLabel]="type.name" [nzValue]="type.name">
+                          </nz-option>
+                        </nz-select>
+                        <nz-form-explain *ngIf="(type.dirty || type.touched) && type.errors?.required">
+                          {{ 'app.dashboard.customer-please-type' | translate }}</nz-form-explain>
+                      </se>
+                    </nz-col>
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-debt' | translate }}">
+                        <input nz-input [(ngModel)]="customerDto.debt" name="debt">
+                      </se>
+                    </nz-col>
+                  </nz-row>
+                  <nz-row nzGutter="16">
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-contact' | translate }}">
+                        <input nz-input [(ngModel)]="customerDto.contactPerson" name="contact">
+                      </se>
+                    </nz-col>
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-email' | translate }}">
+                        <input nz-input [(ngModel)]="customerDto.email" name="email" email #email="ngModel">
+                        <nz-form-explain *ngIf="(email.dirty || email.touched) && email.errors?.email">
+                          {{ "app.dashboard.customer-email-error" | translate }}</nz-form-explain>
+                      </se>
+                    </nz-col>
+                  </nz-row>
+                  <nz-row nzGutter="16">
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-telephone' | translate }}">
+                        <input nz-input [(ngModel)]="customerDto.phoneNumber" name="phone">
+                      </se>
+                    </nz-col>
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-address' | translate }}">
+                        <input nz-input [(ngModel)]="customerDto.address" name="address">
+                      </se>
+                    </nz-col>
+                  </nz-row>
+                  <nz-row nzGutter="16">
+                    <nz-col nzLg="12" nzMd="12" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-operator' | translate }}">
+                        <input nz-input [(ngModel)]="customerDto.operator" name="operator">
+                      </se>
+                    </nz-col>
+                  </nz-row>
+                  <nz-row nzGutter="16">
+                    <nz-col nzLg="24" nzMd="24" nzSm="24">
+                      <se label="{{ 'app.dashboard.customer-comment' | translate }}">
+                        <textarea nz-input [(ngModel)]="customerDto.comment" name="comment"
+                          [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+                          placeholder="{{ 'app.dashboard.customer-please-comment' | translate }}"></textarea>
+                      </se>
+                    </nz-col>
+                  </nz-row>
+                </form>
+                <div class="modal-footer">
+                  <button nz-button [nzType]="'default'" (click)="cancel()">
+                    {{ "app.cancel" | translate }}
+                  </button>
+                  <button nz-button [nzType]="'primary'" [disabled]="!auth[mode] && !f.valid" (click)="ok()">
+                    {{ "app.ok" | translate }}
+                  </button>
+                </div>
+      </nz-tab>
+      <nz-tab [nzDisabled]='!auth.GetProducts' nzTitle="{{ 'app.correlative-information' | translate }}">
+            <app-data-list #dataList></app-data-list>
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+</nz-modal>

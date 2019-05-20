@@ -1,0 +1,32 @@
+<page-header title="{{ 'app.dashboard.statistics-analysis' | translate }}"></page-header>
+<nz-card *ngIf="auth['StatisticsInventoryAnalysis']">
+  <div class="content__title">
+    <div class="blank-grow"></div>
+    <div class="data-range">
+      <span>{{ 'app.dashboard.warehouse' | translate }}: </span>
+      <nz-select [(ngModel)]="selectedWarehouse" (ngModelChange)="statisticsPie($event)" style="width:140px;">
+        <nz-option nzLabel="{{ 'app.all' | translate }}" [nzValue]="''"></nz-option>
+        <nz-option *ngFor="let p of warehouseList" [nzLabel]="p.name" [nzValue]="p.id">
+        </nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <nz-row nzGutter="32" *ngIf="!selectedWarehouse">
+    <g2-pie color="rgba(0,234,231,0.85)" [hasLegend]="true"
+      title="{{ 'app.dashboard.warehouse-inventory' | translate }}"
+      subTitle="{{ 'app.dashboard.warehouse-inventory' | translate }}" [total]="warehousePieTotal"
+      [valueFormat]="defaultFormat" [data]="warehousePieData" height="300"></g2-pie>
+  </nz-row>
+  <nz-row nzGutter="32">
+      <g2-pie color="rgba(134,17,211,0.85)" [hasLegend]="true"
+      title="{{ 'app.dashboard.warehouse-inventory-material' | translate }}"
+      subTitle="{{ 'app.dashboard.warehouse-inventory-material' | translate }}" [total]="materialPieTotal"
+      [valueFormat]="defaultFormat" [data]="materialPieData" height="300"></g2-pie>
+  </nz-row>
+  <nz-row nzGutter="32">
+      <g2-pie color="rgba(63,137,81,0.85)" [hasLegend]="true"
+      title="{{ 'app.dashboard.warehouse-inventory-product' | translate }}"
+      subTitle="{{ 'app.dashboard.warehouse-inventory-product' | translate }}" [total]="productPieTotal"
+      [valueFormat]="defaultFormat" [data]="productPieData" height="300"></g2-pie>
+  </nz-row>
+</nz-card>

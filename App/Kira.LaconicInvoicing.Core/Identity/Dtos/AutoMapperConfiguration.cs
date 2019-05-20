@@ -1,21 +1,8 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="AutoMapperConfiguration.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-07-04 0:24</last-date>
-// -----------------------------------------------------------------------
-
-using AutoMapper.Configuration;
-
+﻿using AutoMapper.Configuration;
 using Kira.LaconicInvoicing.Identity.Entities;
-
 using Microsoft.Extensions.DependencyInjection;
-
 using OSharp.AutoMapper;
 using OSharp.Dependency;
-
 
 namespace Kira.LaconicInvoicing.Identity.Dtos
 {

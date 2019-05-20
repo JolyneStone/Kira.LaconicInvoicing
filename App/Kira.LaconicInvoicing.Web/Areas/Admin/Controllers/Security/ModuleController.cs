@@ -1,13 +1,4 @@
-﻿// -----------------------------------------------------------------------
-//  <copyright file="ModuleController.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2018 OSharp. All rights reserved.
-//  </copyright>
-//  <site>http://www.osharp.org</site>
-//  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-27 4:49</last-date>
-// -----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,7 +7,7 @@ using System.Linq.Expressions;
 using Kira.LaconicInvoicing.Security;
 using Kira.LaconicInvoicing.Security.Dtos;
 using Kira.LaconicInvoicing.Security.Entities;
-
+using Kira.LaconicInvoicing.Service.Security;
 using Microsoft.AspNetCore.Mvc;
 
 using OSharp.Core.Functions;
@@ -91,6 +82,7 @@ namespace Kira.LaconicInvoicing.Web.Areas.Admin.Controllers
         
         private List<object> GetModulesWithChecked(int[] rootIds, int[] checkedModuleIds)
         {
+            var testMoudles = _securityManager.Modules.Where(m => rootIds.Contains(m.Id));
             var modules = _securityManager.Modules.Where(m => rootIds.Contains(m.Id)).OrderBy(m => m.OrderCode).Select(m => new
             {
                 m.Id,
