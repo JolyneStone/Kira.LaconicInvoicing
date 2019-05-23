@@ -111,9 +111,16 @@ namespace Kira.LaconicInvoicing.Service.Print
                 using (var writer = new StreamWriter(System.IO.File.Open(destPath, FileMode.Truncate, FileAccess.Write)))
                 {
                     var scripts = Regex.Split(dto.Script, "Kira.LaconicInvoicingScript", RegexOptions.IgnoreCase);
-                    foreach (var script in scripts)
+                    for(var i = 0; i< scripts.Length; i++)
                     {
-                        await writer.WriteLineAsync(script);
+                        if (i > 0)
+                        {
+                            await writer.WriteLineAsync("Kira.LaconicInvoicingScript" + scripts[i]);
+                        }
+                        else
+                        {
+                            await writer.WriteLineAsync(scripts[i]);
+                        }
                     }
                 }
             }

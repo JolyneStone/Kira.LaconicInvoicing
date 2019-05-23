@@ -34,7 +34,7 @@ export class PrintWindowComponent extends ComponentBase implements OnInit {
 
     this.route.queryParams.subscribe(queryParams => {
       const id = queryParams.id as string;
-      const type = queryParams.type as TemplateType;
+      const type = Number(queryParams.type) as TemplateType;
       this.printService.getPrintData(id, type)
         .subscribe(res => {
           if (res && res.data) {
@@ -151,14 +151,20 @@ export class PrintWindowComponent extends ComponentBase implements OnInit {
     LODOP.PRINT_INITA(10, 20, 810, 610, '打印设计');
     LODOP.SET_PRINTER_INDEXA(this.cog.printer);
     LODOP.SET_PRINT_PAGESIZE(0, 0, 0, this.cog.paper);
-    LODOP.NEWPAGEA();
+    //LODOP.NEWPAGEA();
+    LODOP.NEWPAGE();
     if (this.selectTemplate.script) {
       const script = this.selectTemplate.script
-                      .replace(/"{/g, '`{')
-                      .replace(/}"/g, '}`')
-                      .replace(/Kira.LaconicInvoicingScript/g, 'LODOP.NEWPAGEA();');
+        .replace(/"\${/g, '`${')
+        .replace(/}"/g, '}`')
+        .replace(/Kira.LaconicInvoicingScript/g, 'LODOP.NEWPAGE();');
       const data = this.data;
-      eval(script);
+      console.log(script);
+      try {
+        eval(script);
+      } catch (err) {
+        console.log(err);
+      }
     }
     if (isPreview) {
       LODOP.PREVIEW();

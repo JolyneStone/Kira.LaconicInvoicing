@@ -142,7 +142,7 @@ export class PrintEditComponent extends ComponentBase implements OnInit {
     } else {
       if (files.length > 0) {
         const reader = new FileReader(); // 新建一个FileReader
-        reader.readAsText(files[0], 'UTF-8'); // 读取文件 
+        reader.readAsText(files[0], 'UTF-8'); // 读取文件
         reader.onload = (evt) => {
           this.printTemplateDto.script = (evt.target as any).result; // 读取文件内容
           this.printManagementService.update(this.printTemplateDto)
@@ -153,7 +153,7 @@ export class PrintEditComponent extends ComponentBase implements OnInit {
                 this.msg.error(res.content);
               }
             });
-        }
+        };
       } else {
         this.printManagementService.update(this.printTemplateDto)
           .subscribe(res => {

@@ -25,7 +25,7 @@ export class PrintService {
         url = 'api/purchase/purchaseorder/getprintdata';
         break;
       case TemplateType.inboundReceipt:
-        url = 'api/wasehouse/inboundreceipt/getprintdata';
+        url = 'api/warehouse/inboundreceipt/getprintdata';
         break;
       case TemplateType.outboundReceipt:
         url = 'api/warehouse/outboundreceipt/getprintdata';

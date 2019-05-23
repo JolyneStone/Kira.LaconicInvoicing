@@ -87,7 +87,7 @@ namespace Kira.LaconicInvoicing.Sale.Dtos
         public double AmountPaid { get; set; }
 
         /// <summary>
-        /// 获取或设置 支付金额
+        /// 获取或设置 支付方式
         /// </summary>
         public string PayWay { get; set; }
 
