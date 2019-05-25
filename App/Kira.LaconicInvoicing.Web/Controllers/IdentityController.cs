@@ -132,7 +132,7 @@ namespace Kira.LaconicInvoicing.Web.Controllers
                 string url = $"{Request.Scheme}://{Request.Host}/#/identity/confirm-email?userId={user.Id}&code={code}";
                 string body =
                     $"亲爱的用户 <strong>{user.NickName}</strong>[{user.UserName}]，您好！<br>"
-                    + $"欢迎注册，激活邮箱请 <a href=\"{url}\" target=\"_blank\"><strong>点击这里</strong></a><br>"
+                    + $"欢迎注册，请在30分钟内完成激活操作，激活邮箱请 <a href=\"{url}\" target=\"_blank\"><strong>点击这里</strong></a><br>"
                     + $"如果上面的链接无法点击，您可以复制以下地址，并粘贴到浏览器的地址栏中打开。<br>"
                     + $"{url}<br>"
                     + $"祝您使用愉快！";

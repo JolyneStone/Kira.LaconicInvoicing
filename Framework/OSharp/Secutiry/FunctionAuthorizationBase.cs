@@ -116,6 +116,31 @@ namespace OSharp.Secutiry
         /// </summary>
         /// <param name="function">要验证的功能信息</param>
         /// <param name="principal">用户在线信息</param>
+        /// <param name="roleNames">角色列表</param>
+        /// <returns>功能权限验证结果</returns>
+        protected virtual AuthorizationResult AuthorizeRoleLimit(IFunction function, IPrincipal principal, string roleNames)
+        {
+            //角色限制
+            if (!(principal.Identity is ClaimsIdentity identity))
+            {
+                return new AuthorizationResult(AuthorizationStatus.Error, "当前用户标识IIdentity格式不正确，仅支持ClaimsIdentity类型的用户标识");
+            }
+            //检查角色-功能的权限
+            //string[] userRoleNames = identity.GetRoles().ToArray();
+            AuthorizationResult result = AuthorizeRoleNames(function, roleNames);
+            if (result.IsOk)
+            {
+                return result;
+            }
+            result = AuthorizeUserName(function, principal.Identity.GetUserName());
+            return result;
+        }
+
+        /// <summary>
+        /// 重写以实现 角色限制 的功能的功能权限检查
+        /// </summary>
+        /// <param name="function">要验证的功能信息</param>
+        /// <param name="principal">用户在线信息</param>
         /// <returns>功能权限验证结果</returns>
         protected virtual AuthorizationResult AuthorizeRoleLimit(IFunction function, IPrincipal principal)
         {

@@ -102,11 +102,11 @@ export class ProductEditComponent extends ComponentBase implements OnInit {
       this.bsr.getBaseDataValuesByType('PRODUCTTYPE'),
       this.bsr.getBaseDataValuesByType('UNITTYPE')
     )
-    .pipe(
-      catchError(([types, units]) => {
-        return [types, units];
-      }),
-    )
+      .pipe(
+        catchError(([types, units]) => {
+          return [types, units];
+        }),
+      )
       .subscribe(([types, units]: any) => {
         this.types = types;
         this.units = units;
@@ -126,6 +126,7 @@ export class ProductEditComponent extends ComponentBase implements OnInit {
   }
 
   cancel() {
+    this.dataList.data = [];
     this.isVisible = false;
   }
 
@@ -135,6 +136,7 @@ export class ProductEditComponent extends ComponentBase implements OnInit {
         .subscribe(res => {
           if (res.type === AjaxResultType.success) {
             this.msg.success('添加产品信息成功');
+            this.dataList.data = [];
             this.isVisible = true;
           } else if (res && res.content) {
             this.msg.error(res.content);
@@ -230,7 +232,7 @@ export class ProductEditComponent extends ComponentBase implements OnInit {
           onClick: componentInstance => {
             const products = componentInstance.data.filter(v => componentInstance.mapOfCheckedId[v.id]);
             products.forEach(m => {
-              if (this.dataList.data.indexOf(m) < 0) {
+              if (this.dataList.data.findIndex(v => v.id === m.id) < 0) {
                 this.dataList.data.push(m);
                 this.dataList.mapOfCheckedId[m.id] = true;
                 this.cdr.detectChanges();

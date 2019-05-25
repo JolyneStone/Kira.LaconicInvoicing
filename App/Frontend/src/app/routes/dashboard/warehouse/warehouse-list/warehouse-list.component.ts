@@ -34,7 +34,7 @@ export class WarehouseListComponent extends ComponentBase implements OnInit {
   hasSelected = false;
   isIndeterminate = false;
   isAllDisplayDataChecked = false;
-  pageSize = 20;
+  pageSize = 10;
   pageIndex = 1;
   total = 0;
   sorts: SortDescription[] = [
@@ -96,7 +96,6 @@ export class WarehouseListComponent extends ComponentBase implements OnInit {
 
   refresh() {
     this.pageIndex = 1;
-    this.pageSize = 20;
     this.queryData = { number: '', name: '', address: '' };
     this.search();
   }
@@ -110,8 +109,13 @@ export class WarehouseListComponent extends ComponentBase implements OnInit {
     this.refreshStatus();
   }
 
-  pageIndexChange() {
+  pageIndexChange(event: number) {
+    this.pageIndex = event;
     this.search();
+  }
+
+  pageSizeChange(event: number) {
+    this.pageSize = event;
   }
 
   checkAll(value: boolean): void {

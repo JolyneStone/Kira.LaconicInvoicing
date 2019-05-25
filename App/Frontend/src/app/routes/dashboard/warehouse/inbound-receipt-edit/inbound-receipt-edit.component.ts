@@ -1,3 +1,4 @@
+import { SaleService } from './../../../../shared/business/services/sale.service';
 import { TemplateType } from './../../../../shared/business/app.model';
 import { Component, OnInit, ChangeDetectorRef, Injector } from '@angular/core';
 import { ComponentBase } from '@shared/osharp/services/osharp.service';
@@ -20,6 +21,7 @@ export class InboundReceiptEditComponent extends ComponentBase implements OnInit
   constructor(
     private msg: NzMessageService,
     private purchaseService: PurchaseService,
+    private saleService: SaleService,
     private warehouseService: WarehouseService,
     private i18nService: I18NService,
     private modalService: NzModalService,
@@ -117,6 +119,7 @@ export class InboundReceiptEditComponent extends ComponentBase implements OnInit
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {
@@ -155,7 +158,7 @@ export class InboundReceiptEditComponent extends ComponentBase implements OnInit
           if (!componentInstance.auth.Search) {
             this.msg.warning('您没有该权限');
           } else {
-            this.warehouseService.searchWarehouse(null, null, query.pageIndex, query.pageSize)
+            this.saleService.searchProduct(null, null, query.pageIndex, query.pageSize)
               .subscribe(res => {
                 if (res.type === AjaxResultType.success) {
                   componentInstance.data = res.data.rows;
@@ -173,6 +176,7 @@ export class InboundReceiptEditComponent extends ComponentBase implements OnInit
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {
@@ -239,6 +243,7 @@ export class InboundReceiptEditComponent extends ComponentBase implements OnInit
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {

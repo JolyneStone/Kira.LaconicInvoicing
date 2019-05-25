@@ -1,3 +1,4 @@
+import { SaleService } from './../../../../shared/business/services/sale.service';
 import { TemplateType } from './../../../../shared/business/app.model';
 import { Component, OnInit, ChangeDetectorRef, Injector } from '@angular/core';
 import { ComponentBase } from '@shared/osharp/services/osharp.service';
@@ -8,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OutboundReceiptDto, OutboundReceiptItemDto, QueryCondition, GoodsCategory } from '@shared/business/app.model';
 import { AuthConfig, AjaxResultType } from '@shared/osharp/osharp.model';
 import { DataListSingleServiceComponent } from '@shared/business/components/data-list-single-service/data-list-single-service.component';
+import { PurchaseService } from '../../../../shared/business/services/purchase.service';
 
 @Component({
   selector: 'app-outbound-receipt-edit',
@@ -174,6 +176,7 @@ export class OutboundReceiptEditComponent extends ComponentBase implements OnIni
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {
@@ -242,6 +245,7 @@ export class OutboundReceiptEditComponent extends ComponentBase implements OnIni
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {
@@ -275,7 +279,7 @@ export class OutboundReceiptEditComponent extends ComponentBase implements OnIni
 
   addItem() {
     if(!this.outboundReceiptDto.warehouseNumber){
-      this.msg.warning("请先选择仓库");
+      this.msg.warning('请先选择仓库');
       return;
     }
     this.outboundReceiptDto.items.push(new OutboundReceiptItemDto());

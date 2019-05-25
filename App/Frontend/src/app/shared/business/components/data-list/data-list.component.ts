@@ -53,7 +53,8 @@ export class DataListComponent implements OnInit {
     this.search();
   }
 
-  pageIndexChange() {
+  pageIndexChange(event: number) {
+    this.pageIndex = event;
     this.search();
   }
 

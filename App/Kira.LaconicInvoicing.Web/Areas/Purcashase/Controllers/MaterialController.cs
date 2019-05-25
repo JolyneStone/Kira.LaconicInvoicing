@@ -206,7 +206,7 @@ namespace Kira.LaconicInvoicing.Web.Areas.Purchase.Controllers
         }
 
         /// <summary>
-        /// 更新指定原料的原料信息
+        /// 更新指定原料的供应商信息
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -214,18 +214,18 @@ namespace Kira.LaconicInvoicing.Web.Areas.Purchase.Controllers
         [ModuleInfo]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("更新指定原料的供应商信息")]
-        public async Task<AjaxResult> UpdateVendors([FromBody]RelevantDto<Guid,Guid> dto)
+        public async Task<AjaxResult> UpdateVendors([FromBody]RelevantDto<Guid, Guid> dto)
         {
             return await AjaxResult.Business(async result =>
             {
                 Check.NotNull(dto, nameof(dto));
                 Check.NotNull(dto.Id, nameof(dto.Id));
                 Check.NotNull(dto.Ids, nameof(dto.Ids));
-
+                dto.Ids = dto.Ids.Distinct().ToArray();
                 var r = await _materialContract.UpdateVendors(dto.Id, dto.Ids, ServiceProvider);
                 if (r == false)
                 {
-                    result.Error("无法更新指定原料的原料信息");
+                    result.Error("无法更新指定原料的供应商信息");
                 }
                 else
                 {

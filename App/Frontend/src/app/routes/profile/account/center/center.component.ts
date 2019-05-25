@@ -15,7 +15,6 @@ import { _HttpClient, SettingsService } from '@delon/theme';
 import { zip, Subscription } from 'rxjs';
 import { appSettings } from 'app/app.settings';
 import { ComponentBase } from '@shared/osharp/services/osharp.service';
-import { Inject } from '@angular/compiler/src/core';
 import { AuthConfig } from '@shared/osharp/osharp.model';
 import { UserDetail } from '@shared/business/app.model';
 
@@ -55,51 +54,51 @@ export class ProfileAccountCenterComponent extends ComponentBase implements OnIn
   ngOnInit(): void {
     zip(
       this.http.get('api/usercenter/profile/info'),
-      this.http.get('/api/notice')
+      this.http.get('api/notification/notification/getallbyuser')
     )
-    .pipe(
-      catchError(([userDetail, notice]) => {
-        return [userDetail, notice];
-      }),
-    )
-    .subscribe(
-      ([userDetail, notice]: any) => {
-        this.userDetail = userDetail;
-        this.avatar = appSettings.service_url + appSettings.avatarPrefix + this.userDetail.avatar;
-        if (userDetail.profile) {
-          const profileObj = JSON.parse(userDetail.profile);
-          this.userDetail.personalProfile = profileObj.personalProfile;
-          this.userDetail.country = profileObj.country;
-          this.userDetail.province = profileObj.province;
-          this.userDetail.city = profileObj.city;
-          this.userDetail.address = profileObj.address;
-          this.userDetail.department = profileObj.department;
-        }
-        
-        // this.notice = notice;
-
-        zip(
-          this.http.get(`/geo/${this.userDetail.province}`),
-          this.http.get(`/geo/${this.userDetail.city}`),
-        )
-        .pipe(
-          catchError(([province, city]) => {
-            return [province, city];
-          }),
-        )
-        .subscribe(
-          ([province, city]: any) => {
-            if (province) {
-              this.userDetail.province = province.name;
-            }
-            if (city) {
-              this.userDetail.city = city.name;
-            }
-            this.cdr.detectChanges();
+      .pipe(
+        catchError(([userDetail, notice]) => {
+          return [userDetail, notice];
+        }),
+      )
+      .subscribe(
+        ([userDetail, notice]: any) => {
+          this.userDetail = userDetail;
+          this.avatar = appSettings.service_url + appSettings.avatarPrefix + this.userDetail.avatar;
+          if (userDetail.profile) {
+            const profileObj = JSON.parse(userDetail.profile);
+            this.userDetail.personalProfile = profileObj.personalProfile;
+            this.userDetail.country = profileObj.country;
+            this.userDetail.province = profileObj.province;
+            this.userDetail.city = profileObj.city;
+            this.userDetail.address = profileObj.address;
+            this.userDetail.department = profileObj.department;
           }
-        );
-      },
-    );
+
+          // this.notice = notice;
+
+          zip(
+            this.http.get(`/geo/${this.userDetail.province ? this.userDetail.province : '-1'}`),
+            this.http.get(`/geo/${this.userDetail.city ? this.userDetail.city : '-1'}`),
+          )
+            .pipe(
+              catchError(([province, city]) => {
+                return [province, city];
+              }),
+            )
+            .subscribe(
+              ([province, city]: any) => {
+                if (province) {
+                  this.userDetail.province = province.name;
+                }
+                if (city) {
+                  this.userDetail.city = city.name;
+                }
+                this.cdr.detectChanges();
+              }
+            );
+        },
+      );
     this.router$ = this.router.events
       .pipe(filter(e => e instanceof ActivationEnd))
       .subscribe(() => this.setActive());

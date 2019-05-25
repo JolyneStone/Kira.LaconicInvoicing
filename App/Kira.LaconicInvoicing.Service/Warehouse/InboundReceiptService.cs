@@ -111,6 +111,7 @@ namespace Kira.LaconicInvoicing.Service.Warehouse
                         Id = Guid.NewGuid(),
                         WarehouseId = warehouse.Id,
                         GoodsCategory = item.GoodsCategory,
+                        Name = item.Name,
                         Number = item.Number,
                         Amount = item.Amount,
                         DateTime = dt

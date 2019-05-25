@@ -49,7 +49,8 @@ export class DataListMutilServiceComponent extends ComponentBase implements OnIn
     this.search();
   }
 
-  pageIndexChange() {
+  pageIndexChange(event: number) {
+    this.pageIndex = event;
     this.search();
   }
 

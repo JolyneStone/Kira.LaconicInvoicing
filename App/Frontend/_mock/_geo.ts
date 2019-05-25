@@ -74,7 +74,9 @@ export const GEOS = {
     return DATA.filter(w => w.id.slice(0, 2) === pid && !w.id.endsWith('0000'));
   },
   '/geo/:id': (req: MockRequest) => {
-    if(!req.params.id)
+    if (!req.params.id)
+      return '';
+    if (req.params.id == '-1')
       return '';
     const pid = req.params.id;
     return DATA.find(w => w.id === pid);

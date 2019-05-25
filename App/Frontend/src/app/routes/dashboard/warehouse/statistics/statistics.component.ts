@@ -42,7 +42,7 @@ export class StatisticsComponent extends ComponentBase implements OnInit {
 
   async ngOnInit() {
     super.checkAuth();
-    this.selectedWarehouse = null;
+    this.selectedWarehouse = '';
     this.warehouseList = [];
     this.warehousePieData = [];
     this.materialPieData = [];

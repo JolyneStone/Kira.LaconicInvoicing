@@ -242,6 +242,7 @@ export class SaleOrderEditComponent extends ComponentBase implements OnInit {
   selectProductItem(index: number) {
     if (!this.saleOrderDto.customerNumber) {
       this.msg.warning('请先选择客户');
+      this.isAdding = false;
       return;
     }
 
@@ -281,6 +282,7 @@ export class SaleOrderEditComponent extends ComponentBase implements OnInit {
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {

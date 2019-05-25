@@ -221,6 +221,7 @@ namespace Kira.LaconicInvoicing.Web.Areas.Purchase.Controllers
                 Check.NotNull(dto.Id, nameof(dto.Id));
                 Check.NotNull(dto.Ids, nameof(dto.Ids));
 
+                dto.Ids = dto.Ids.Distinct().ToArray();
                 var r = await _vendorContract.UpdateMaterials(dto.Id, dto.Ids, ServiceProvider);
                 if (r == false)
                 {

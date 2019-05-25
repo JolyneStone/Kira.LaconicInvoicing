@@ -61,9 +61,9 @@
     <i nz-icon type="redo"></i>
     <span>{{ 'app.refresh' | translate }}</span>
   </button>
-  <nz-table #rowSelectionTable nzShowSizeChanger [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="total"
-    [nzData]="saleOrderDtoList" (nzCurrentPageDataChange)="currentPageDataChange($event)"
-    (nzPageIndexChange)="pageIndexChange()">
+  <nz-table #rowSelectionTable nzShowSizeChanger [nzFrontPagination]="false" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="total" nzShowTotal
+    [nzData]="saleOrderDtoList" (nzCurrentPageDataChange)="currentPageDataChange($event)" (nzPageSizeChange)="pageSizeChage($event)"
+    (nzPageIndexChange)="pageIndexChange($event)">
     <thead>
       <tr>
         <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"

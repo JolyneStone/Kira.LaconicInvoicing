@@ -51,6 +51,7 @@ export class StatisticsComponent extends ComponentBase implements OnInit {
 
   async ngOnInit() {
     super.checkAuth();
+    this.period = StatisticsPeriod.month;
     if (this.auth.TrendStatisticsAnalysis) {
       this.periodKeys = Object.keys(this.periodStatus).filter(f => !isNaN(Number(f)));
       this.period = StatisticsPeriod.month;

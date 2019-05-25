@@ -1,5 +1,6 @@
-<nz-table smallTable #rowSelectionTable nzShowSizeChanger [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzData]="data" [nzTotal]="total"
-  (nzCurrentPageDataChange)="currentPageDataChange($event)" (nzPageIndexChange)="pageIndexChange()">
+<nz-table #rowSelectionTable [nzFrontPagination]="false" nzSize="'middle'" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzData]="data"
+  [nzTotal]="total" nzShowTotal (nzCurrentPageDataChange)="currentPageDataChange($event)"
+  (nzPageIndexChange)="pageIndexChange($event)">
   <thead>
     <tr>
       <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
@@ -10,7 +11,7 @@
   <tbody>
     <tr *ngFor="let d of rowSelectionTable.data">
       <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[d.id]" (nzCheckedChange)="refreshStatus()"></td>
-      <th *ngFor="let c of columns">{{ c.get(d) }}</th>
+      <td *ngFor="let c of columns">{{ c.get(d) }}</td>
     </tr>
   </tbody>
 </nz-table>

@@ -101,7 +101,7 @@
                   </button>
                 </div>
       </nz-tab>
-      <nz-tab [nzDisabled]='!auth.GetProducts' nzTitle="{{ 'app.correlative-information' | translate }}">
+      <nz-tab [nzDisabled]="mode === 'Add'" nzTitle="{{ 'app.correlative-information' | translate }}">
             <app-data-list #dataList></app-data-list>
       </nz-tab>
     </nz-tabset>

@@ -18,7 +18,7 @@ namespace Kira.LaconicInvoicing.Purchase.Dtos
         /// <param name="mapper">映射配置表达</param>
         public void CreateMaps(MapperConfigurationExpression mapper)
         {
-            mapper.CreateMap<PurchaseOrderItemInputDto, PurchaseOrderItem>().ForMember(po => po.PurchaseOrderId, opt => opt.Ignore());
+            //mapper.CreateMap<PurchaseOrderItemInputDto, PurchaseOrderItem>().ForMember(po => po.PurchaseOrderId, opt => opt.Ignore());
             //mapper.CreateMap<PurchaseOrderItem, PurchaseOrderItemOutputDto>();
             mapper.CreateMap<PurchaseOrder, PurchaseOrderOutputDto>().ForMember(po => po.Items, opt => opt.Ignore());
             mapper.CreateMap<PurchaseOrderOutputDto, PurchaseOrderPrintDataDto>()

@@ -6,7 +6,7 @@
           <input nz-input [(ngModel)]="userDetail.nickName" name="name" required>
         </se>
         <se label="{{ 'app.account.department' | translate }}" error="{{ 'app.account.settings.please-department' | translate }}">
-          <input nz-input [(ngModel)]="userDetail.department" name="department" required>
+          <input nz-input [(ngModel)]="userDetail.department" name="department">
         </se>
         <se label="{{ 'app.account.profile' | translate }}">
           <textarea nz-input [(ngModel)]="userDetail.personalProfile" name="profile" [nzAutosize]="{ minRows: 4, maxRows: 10 }"

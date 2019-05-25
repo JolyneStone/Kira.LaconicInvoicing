@@ -23,7 +23,7 @@ export class DataListSingleServiceComponent extends ComponentBase implements OnI
   hasLoad = false;
   isIndeterminate = false;
   isAllDisplayDataChecked = false;
-  pageSize = 5;
+  pageSize = 10;
   pageIndex = 1;
   total = 0;
   @Input() serverAuthConfig: AuthConfig;
@@ -55,7 +55,8 @@ export class DataListSingleServiceComponent extends ComponentBase implements OnI
     this.search();
   }
 
-  pageIndexChange() {
+  pageIndexChange(event: number) {
+    this.pageIndex = event;
     this.search();
   }
 

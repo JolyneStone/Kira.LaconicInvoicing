@@ -47,7 +47,6 @@ namespace Kira.LaconicInvoicing.Purchase.Dtos
         /// <summary>
         /// 获取或设置 规格
         /// </summary>
-        [Required]
         [StringLength(maximumLength: 255)]
         public string Spec { get; set; }
 

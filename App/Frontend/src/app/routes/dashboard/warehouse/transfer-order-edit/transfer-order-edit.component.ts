@@ -183,6 +183,7 @@ export class TransferOrderEditComponent extends ComponentBase implements OnInit 
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {
@@ -249,6 +250,7 @@ export class TransferOrderEditComponent extends ComponentBase implements OnInit 
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {
@@ -281,8 +283,8 @@ export class TransferOrderEditComponent extends ComponentBase implements OnInit 
   }
 
   addItem() {
-    if(!this.transferOrderDto.sourceWarehouseNumber){
-      this.msg.warning("请先选择调出仓库");
+    if (!this.transferOrderDto.sourceWarehouseNumber) {
+      this.msg.warning('请先选择调出仓库');
       return;
     }
     this.transferOrderDto.items.push(new TransferOrderItemDto());

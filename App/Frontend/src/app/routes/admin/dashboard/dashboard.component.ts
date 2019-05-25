@@ -85,7 +85,7 @@ export class AdminDashboardComponent extends ComponentBase implements OnInit {
         let chart = this.userLineChart;
         chart.source(dv, { Date: { range: [0, 1] } });
         chart.tooltip({ crosshairs: { type: 'line' } });
-        chart.axis('date', { label: { formatter: val => new Date(val).toLocaleDateString() } });
+        chart.axis('date', { label: { formatter: val => new Date(val).toDateString() + '              ' } });
         chart.line().position('date*value').color('key').shape('smooth');
         chart.point().position('date*value').color('key').size(4).shape('circle').style({ stroke: '#fff', lineWidth: 1 });
         chart.render();

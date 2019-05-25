@@ -85,7 +85,10 @@ namespace Kira.LaconicInvoicing.Service.Purcachase
 
             var purchaseOrder = dto.MapTo<PurchaseOrder>();
             var items = dto.Items.Select(d => d.MapTo<PurchaseOrderItem>()).ToArray();
-
+            //foreach(var item in items)
+            //{
+            //    item.PurchaseOrderId = purchaseOrder.Id;
+            //}
             await _purchaseOrderRepo.InsertAsync(purchaseOrder);
             await _purchaseOrderItemRepo.InsertAsync(items);
             return true;

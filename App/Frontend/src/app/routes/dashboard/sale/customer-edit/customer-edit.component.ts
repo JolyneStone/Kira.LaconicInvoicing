@@ -117,6 +117,7 @@ export class CustomerEditComponent extends ComponentBase implements OnInit, Afte
   }
 
   cancel() {
+    this.dataList.data = [];
     this.isVisible = false;
   }
 
@@ -126,7 +127,8 @@ export class CustomerEditComponent extends ComponentBase implements OnInit, Afte
         .subscribe(res => {
           if (res.type === AjaxResultType.success) {
             this.msg.success('添加客户信息成功');
-            this.isVisible = true;
+            this.dataList.data = [];
+            this.isVisible = false;
           } else if (res && res.content) {
             this.msg.error(res.content);
           }
@@ -221,7 +223,7 @@ export class CustomerEditComponent extends ComponentBase implements OnInit, Afte
           onClick: componentInstance => {
             const products = componentInstance.data.filter(v => componentInstance.mapOfCheckedId[v.id]);
             products.forEach(m => {
-              if (this.dataList.data.indexOf(m) < 0) {
+              if (this.dataList.data.findIndex(v=> v.id === m.id) < 0) {
                 this.dataList.data.push(m);
                 this.dataList.mapOfCheckedId[m.id] = true;
                 this.cdr.detectChanges();

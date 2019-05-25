@@ -242,6 +242,7 @@ export class PurchaseOrderEditComponent extends ComponentBase implements OnInit 
   selectMaterialItem(index: number) {
     if (!this.purchaseOrderDto.vendorNumber) {
       this.msg.warning('请先选择供应商');
+      this.isAdding = false;
       return;
     }
 
@@ -279,6 +280,7 @@ export class PurchaseOrderEditComponent extends ComponentBase implements OnInit 
           type: 'default',
           onClick: componentInstance => {
             componentInstance.close();
+            this.isAdding = false;
           }
         },
         {

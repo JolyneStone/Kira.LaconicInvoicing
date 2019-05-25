@@ -89,7 +89,7 @@ export class VendorEditComponent extends ComponentBase implements OnInit, AfterV
     this.dataList.searchAll = () => this.handleGetMaterialsAll();
     this.dataList.cancel = () => this.cancel();
 
-    if (mode === 'Update'){
+    if (mode === 'Update') {
       this.dataList.loadData(new QueryCondition(), [
         { name: this.i18nService.fanyi('app.dashboard.material-number'), get: d => d.number },
         { name: this.i18nService.fanyi('app.dashboard.material-name'), get: d => d.name },
@@ -120,6 +120,7 @@ export class VendorEditComponent extends ComponentBase implements OnInit, AfterV
   }
 
   cancel() {
+    this.dataList.data = [];
     this.isVisible = false;
   }
 
@@ -129,7 +130,8 @@ export class VendorEditComponent extends ComponentBase implements OnInit, AfterV
         .subscribe(res => {
           if (res.type === AjaxResultType.success) {
             this.msg.success('添加供应商信息成功');
-            this.isVisible = true;
+            this.dataList.data = [];
+            this.isVisible = false;
           } else if (res && res.content) {
             this.msg.error(res.content);
           }
@@ -224,7 +226,8 @@ export class VendorEditComponent extends ComponentBase implements OnInit, AfterV
           onClick: componentInstance => {
             const materials = componentInstance.data.filter(v => componentInstance.mapOfCheckedId[v.id]);
             materials.forEach(m => {
-              if (this.dataList.data.indexOf(m) < 0) {
+              if (this.dataList.data.findIndex(v => v.id === m.id) < 0) {
+                //if (this.dataList.data.indexOf(m) < 0) {
                 this.dataList.data.push(m);
                 this.dataList.mapOfCheckedId[m.id] = true;
                 this.cdr.detectChanges();

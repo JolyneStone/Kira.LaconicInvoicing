@@ -105,7 +105,7 @@ export class FunctionComponent extends GridComponentBase implements AfterViewIni
   protected GetDataSourceOptions(): kendo.data.DataSourceOptions {
     let options = super.GetDataSourceOptions();
     options.group = [{ field: "area" }, { field: "controller" }];
-    options.pageSize = 20;
+    options.pageSize = 10;
     return options;
   }
 

@@ -133,6 +133,21 @@ namespace Kira.LaconicInvoicing.Web.Areas.File.Controllers
         }
 
         /// <summary>
+        /// 获取指定文档模板信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [ModuleInfo]
+        [Description("获取指定文档模板信息")]
+        public async Task<AjaxResult> Get(Guid id)
+        {
+            return await AjaxResult.Business(async result =>
+            {
+                result.Success(await _fileContract.GetAsync(id));
+            });
+        }
+
+        /// <summary>
         /// 下载文档模板文件
         /// </summary>
         /// <returns></returns>

@@ -17,7 +17,6 @@ import { AuthConfig, AjaxResultType } from '@shared/osharp/osharp.model';
 export class DocumentWindowComponent extends ComponentBase implements OnInit {
   constructor(
     private documentService: DocumentService,
-    private lodopSrv: LodopService,
     private msg: NzMessageService,
     private route: ActivatedRoute,
     injector: Injector,

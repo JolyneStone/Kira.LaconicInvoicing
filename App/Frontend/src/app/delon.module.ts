@@ -47,8 +47,6 @@ export function delonAuthConfig(): DelonAuthConfig {
       /ResetPassword/,
       /CheckUserNameExists/,
       /CheckNickNameExists/,
-      /getauthinfo/,
-      /CheckUrlAuth/
     ]
   });
 }

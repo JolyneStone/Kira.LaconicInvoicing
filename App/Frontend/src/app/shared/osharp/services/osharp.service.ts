@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { List } from 'linqts';
 import { CacheService } from '@shared/osharp/cache/cache.service';
 import { map } from 'rxjs/operators';
+import { SettingsService } from '@delon/theme/src/services/settings/settings.service';
 
 @Injectable()
 export class OsharpService {
@@ -294,7 +295,11 @@ export class OsharpService {
    */
   refreshAuthInfo(): Promise<string[]> {
     let key = 'api/security/getauthinfo';
-    return this.cache.get<string[]>(key, { expire: 60 * 10 }).toPromise();
+    const user = localStorage.getItem('user');
+    if (user) {
+      key = key + `/?id=${JSON.parse(user).id}`;
+    }
+    return this.cache.get<string[]>(key, { mode: 'promise', expire: 60 * 60 * 24 }).toPromise();
   }
 
   // #endregion

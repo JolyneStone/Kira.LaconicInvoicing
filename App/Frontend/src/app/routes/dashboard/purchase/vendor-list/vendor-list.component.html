@@ -35,7 +35,8 @@
       </div>
       <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
         <nz-form-item>
-          <nz-form-label nzFor="rangeDate">{{ 'app.dashboard.range-datetime' | translate }}</nz-form-label>&nbsp;&nbsp;&nbsp;
+          <nz-form-label nzFor="rangeDate">{{ 'app.dashboard.range-datetime' | translate }}</nz-form-label>
+          &nbsp;&nbsp;&nbsp;
           <nz-form-control>
             <nz-range-picker name="rangeDate" [(ngModel)]="queryData.rangeDate" nzFormat="yyyy-MM-dd">
             </nz-range-picker>
@@ -63,9 +64,10 @@
     <i nz-icon type="redo"></i>
     <span>{{ 'app.refresh' | translate }}</span>
   </button>
-  <nz-table #rowSelectionTable nzShowSizeChanger [nzPageIndex]="pageIndex" [nzPageSize]="pageSize" [nzTotal]="total"
-    [nzData]="vendorDtoList" (nzCurrentPageDataChange)="currentPageDataChange($event)"
-    (nzPageIndexChange)="pageIndexChange()">
+  <nz-table #rowSelectionTable nzShowSizeChanger [nzFrontPagination]="false" [nzPageIndex]="pageIndex"
+    [nzPageSize]="pageSize" [nzTotal]="total" nzShowTotal [nzData]="vendorDtoList"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)" (nzPageSizeChange)="pageSizeChange($event)"
+    (nzPageIndexChange)="pageIndexChange($event)">
     <thead>
       <tr>
         <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
@@ -74,9 +76,11 @@
           {{ 'app.dashboard.vendor-name' | translate }}</th>
         <th nzShowSort [nzSort]="sorts[1].order" (nzSortChange)="sort('Number', $event)">
           {{ 'app.dashboard.vendor-number' | translate }}</th>
-        <th nzShowSort [nzSort]="sorts[2].order" (nzSortChange)="sort('Type', $event)">{{ 'app.dashboard.vendor-type' | translate }}
+        <th nzShowSort [nzSort]="sorts[2].order" (nzSortChange)="sort('Type', $event)">
+          {{ 'app.dashboard.vendor-type' | translate }}
         </th>
-        <th nzShowSort [nzSort]="sorts[3].order" (nzSortChange)="sort('Datetime', $event)">{{ 'app.update-datetime' | translate }}
+        <th nzShowSort [nzSort]="sorts[3].order" (nzSortChange)="sort('Datetime', $event)">
+          {{ 'app.update-datetime' | translate }}
         </th>
         <th>{{ 'app.operator' | translate }}</th>
       </tr>

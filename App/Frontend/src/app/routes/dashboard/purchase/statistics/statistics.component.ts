@@ -55,6 +55,7 @@ export class StatisticsComponent extends ComponentBase implements OnInit {
 
   async ngOnInit() {
     super.checkAuth();
+    this.period = StatisticsPeriod.month;
     if (this.auth.TrendStatisticsAnalysis) {
       this.periodKeys = Object.keys(this.periodStatus).filter(f => !isNaN(Number(f)));
       this.period = StatisticsPeriod.month;
@@ -120,6 +121,9 @@ export class StatisticsComponent extends ComponentBase implements OnInit {
             const valueQuantity = (data.quantityColumn as ColumnChartDto).data.find(v => name === v.xpos);
             this.trendQuantityData.push({ x: name + suffix, y: valueQuantity ? valueQuantity.ypos : 0 });
           }
+
+          console.log(this.trendAmountData);
+          console.log(this.trendQuantityData);
         } else if (res && res.content) {
           this.msg.error(res.content);
         }
@@ -191,8 +195,6 @@ export class StatisticsComponent extends ComponentBase implements OnInit {
               return { x: v.name, y: v.ratio };
             });
           }
-
-          console.log(this.generalVendorQuantityData);
         } else if (res && res.content) {
           this.msg.error(res.content);
         }

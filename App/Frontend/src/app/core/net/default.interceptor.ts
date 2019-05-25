@@ -12,7 +12,7 @@ import {
   HttpUserEvent,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { mergeMap, catchError } from 'rxjs/operators';
+import { mergeMap, catchError, timeout } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
@@ -24,7 +24,7 @@ import { DA_SERVICE_TOKEN, JWTTokenModel } from '@delon/auth';
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
@@ -134,6 +134,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
 
     return next.handle(newReq).pipe(
+      timeout(60 * 1000 * 10),
       mergeMap((event: any) => {
         // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要
         if (event instanceof HttpResponse && event.status === 200)
