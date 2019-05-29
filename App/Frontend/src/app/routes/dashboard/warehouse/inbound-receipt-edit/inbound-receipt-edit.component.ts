@@ -276,8 +276,8 @@ export class InboundReceiptEditComponent extends ComponentBase implements OnInit
   }
 
   addItem() {
-    if(!this.inboundReceiptDto.warehouseNumber){
-      this.msg.warning("请先选择仓库");
+    if (!this.inboundReceiptDto.warehouseNumber) {
+      this.msg.warning('请先选择仓库');
       return;
     }
     this.inboundReceiptDto.items.push(new InboundReceiptItemDto());
@@ -297,9 +297,11 @@ export class InboundReceiptEditComponent extends ComponentBase implements OnInit
 
   saveItem(index: number) {
     if (this.editObj && this.editObj.number && this.editObj.name && this.editObj.price !== null && this.editObj.amount !== null) {
+      if (this.inboundReceiptDto.items.findIndex(m => this.editObj.number === m.number) < 0) {
       this.inboundReceiptDto.items[index] = { ...this.editObj };
       this.editIndex = -1;
     }
+  }
   }
 
   cancelItem(index: number) {

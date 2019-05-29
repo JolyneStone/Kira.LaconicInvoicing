@@ -304,8 +304,10 @@ export class TransferOrderEditComponent extends ComponentBase implements OnInit 
 
   saveItem(index: number) {
     if (this.editObj && this.editObj.number && this.editObj.name && this.editObj.price !== null && this.editObj.amount !== null) {
-      this.transferOrderDto.items[index] = { ...this.editObj };
-      this.editIndex = -1;
+      if (this.transferOrderDto.items.findIndex(m => this.editObj.number === m.number) < 0) {
+        this.transferOrderDto.items[index] = { ...this.editObj };
+        this.editIndex = -1;
+      }
     }
   }
 

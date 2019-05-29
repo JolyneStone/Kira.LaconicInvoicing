@@ -139,5 +139,7 @@ namespace Kira.LaconicInvoicing.Warehouse.Entities
         /// </summary>
         [DisplayName("最近更新时间")]
         public DateTime? DateTime { get; set; }
+
+        //public List<TransferOrderItem> TransferOrderItems { get; set; } 
     }
 }

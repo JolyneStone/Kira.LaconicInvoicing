@@ -43,8 +43,8 @@ export const adminMenu: Menu[] = [
       {
         text: '系统管理', i18n: 'menu.system.manage', group: true, icon: 'anticon anticon-setting', children: [
           { text: '公告发布', i18n: 'menu.system.manage.notice', link: '/admin/system/notice' },
-          { text: '操作审计', i18n: 'menu.system.manage.audit-operation', link: '/admin/system/audit-operation' },
-          { text: '数据审计', i18n: 'menu.system.manage.audit-entity', link: '/admin/system/audit-entity' },
+          // { text: '操作审计', i18n: 'menu.system.manage.audit-operation', link: '/admin/system/audit-operation' },
+          // { text: '数据审计', i18n: 'menu.system.manage.audit-entity', link: '/admin/system/audit-entity' },
           { text: '模块包', i18n: 'menu.system.manage.pack', link: '/admin/system/pack' },
         ]
       }

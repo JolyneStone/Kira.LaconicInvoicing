@@ -154,5 +154,7 @@ namespace Kira.LaconicInvoicing.Purchase.Entities
         /// </summary>
         [DisplayName("最近更新时间")]
         public DateTime? DateTime { get; set; }
+
+        //public virtual List<PurchaseOrderItem> PurchaseOrderItems { get; set; }
     }
 }

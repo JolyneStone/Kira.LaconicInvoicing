@@ -12,5 +12,9 @@ namespace Kira.LaconicInvoicing.Purchase.Entities
         public Guid VendorId { get; set; }
         [Required]
         public Guid MaterialId { get; set; }
+
+        public virtual List<Vendor> Vendors { get; set; }
+
+        //public virtual List<Material> Materials { get; set; }
     }
 }

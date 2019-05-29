@@ -299,8 +299,10 @@ export class OutboundReceiptEditComponent extends ComponentBase implements OnIni
 
   saveItem(index: number) {
     if (this.editObj && this.editObj.number && this.editObj.name && this.editObj.price !== null && this.editObj.amount !== null) {
+      if (this.outboundReceiptDto.items.findIndex(m => this.editObj.number === m.number) < 0) {
       this.outboundReceiptDto.items[index] = { ...this.editObj };
       this.editIndex = -1;
+      }
     }
   }
 

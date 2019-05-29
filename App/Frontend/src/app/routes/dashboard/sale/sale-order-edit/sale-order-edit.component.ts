@@ -334,8 +334,10 @@ export class SaleOrderEditComponent extends ComponentBase implements OnInit {
 
   saveItem(index: number) {
     if (this.editObj && this.editObj.number && this.editObj.name && this.editObj.price !== null && this.editObj.amount !== null) {
-      this.saleOrderDto.items[index] = { ...this.editObj };
-      this.editIndex = -1;
+      if (this.saleOrderDto.items.findIndex(m => this.editObj.number === m.number) < 0) {
+        this.saleOrderDto.items[index] = { ...this.editObj };
+        this.editIndex = -1;
+      }
     }
   }
 

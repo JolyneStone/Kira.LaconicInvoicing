@@ -12,5 +12,9 @@ namespace Kira.LaconicInvoicing.Sale.Entities
         public Guid CustomerId { get; set; }
         [Required]
         public Guid ProductId { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public Product Product { get; set; }
     }
 }

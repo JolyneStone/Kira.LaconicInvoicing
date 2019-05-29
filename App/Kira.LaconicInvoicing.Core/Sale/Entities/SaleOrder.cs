@@ -153,5 +153,7 @@ namespace Kira.LaconicInvoicing.Sale.Entities
         /// </summary>
         [DisplayName("最近更新时间")]
         public DateTime? DateTime { get; set; }
+
+        public virtual List<SaleOrderItem> SaleOrderItems { get; set; }
     }
 }
