@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@progress/kendo-ui": "^2018.1.403",
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "bootstrap": "3.3.7",
     "glob": "^7.1.2",
     "jquery": "^3.3.1",
